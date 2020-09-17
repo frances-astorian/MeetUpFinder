@@ -1,1 +1,1 @@
-web: gunicorn sprint1.wsgi
+web: gunicorn mysite.wsgi
