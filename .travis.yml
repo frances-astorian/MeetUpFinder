@@ -1,14 +1,14 @@
-langauge: python
-python:
-- 3.7.6
-install:
-- pip install -r requirements.txt
-script:
-- python manage.py test social_app
-deploy:
-  api_key:
+deploy: 
+  api_key: 
     secure: alqX3mZZ5c1osPmPDFnP3UQwxKs+iJnPyLKqYTsF1nKJbDx/Pc6nBR1loIzxD9erq4IW/7St1DqjMqMptHDJkO7oQ8oU/JF+g+O/mXthD/n59iOgnmzoE8EO7xSypu0uYtwmJEMLBDe/H/1GIC3bklZrLSGBC6XVUQb6ganpDzA9RTL99AMp+FtoZWrF9/IqTgN/ebMUGXxcnGslbDkDkFPEdjJ/5bfUlrQEWWTaZzuKInnpirZO83WkIuBxg5mFN0ac54SodRl71G2siAFugF5OWUWVwYYrlNOHaGtpZhY/Q8uMH0MBPf9iGJT/osh4M09Ur7vw0iYQKkf9O2Mrl5YIQX9os8eky8MIpiP8D3t5mE5ZHRCnZQQTw0k29LNCTnbtOzX09EXpTKjEbZC4MVi9XGi1oxsDoKYwt1fR2vXH+0UHIfWRg7vR0G0GEELy/xeFC7IlI2VpTMSI0jQ+bUURSdSwwpUACAyFLVpl4gArIqxnb7OeZtOcPGSARBtQ5n7aoChgQ0+GkITbE8D//Ol1gWdM2O5hyQ7+MPYV+ED8SXG8PfwhzySyke0dFASB7IabSleIXD+09yVYmK9vgYaMYutmvILZI32C/U5h62JrEm+RVGccfiU7X5pAEpKBV0v5BeAUNHnRSzNYpbC2gUjuOx7kv7HVYh5lZ5yze/Q=
-	provider: heroku
-	app: hoos2meet
-	on:
-		repo: uva-cs3240-f20/project-1-21
+  app: hoos2meet
+  provider: heroku
+  true: 
+    repo: uva-cs3240-f20/project-1-21
+install: 
+  - "pip install -r requirements.txt"
+langauge: python
+python: 
+  - "3.7.6"
+script: 
+  - "python manage.py test social_app"
