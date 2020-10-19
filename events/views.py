@@ -21,6 +21,9 @@ from .models import Event
 def index(request):
     return HttpResponse("Hello, world. This is for events.")
 
+def Map(request):
+    return render(request,'events/map.html',{})
+
 class EventsView(generic.ListView):
     model = Event
     template_name = 'events/event_list.html'

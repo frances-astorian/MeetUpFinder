@@ -9,5 +9,5 @@ urlpatterns = [
     path('list/', views.EventsView.as_view(), name='event_list'),
     path('post/', views.postEventForm, name='post_event'),
     path('<int:pk>/', views.DetailView.as_view(), name = 'detail'),
-
+    path('map/',views.Map,name="map")
     ]
