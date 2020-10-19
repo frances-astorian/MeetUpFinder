@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Event Detail View</title>
+  </head>
+  {% extends 'base.html' %}
+  {% load static %}
+  <body>
+    {% block content %}
+    <h3 class = 'text-center'>{{ event.title_text }}</h1>
+    <ul>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Location</th>
+          <td>{{ event.location_text }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Time</th>
+          <td>{{ event.time_text }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Categories</th>
+          <td>{{ event.category_text }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Description</th>
+          <td>{{ event.description_text }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </ul>
+    {% endblock %}
+  </body>
+</html>
