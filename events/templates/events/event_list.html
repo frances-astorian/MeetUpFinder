@@ -27,18 +27,33 @@
     <script>  
       // Initialize and add the map
       function initMap() {
-        // The location of Uluru
+        var event_length=events_list.length();
+        var marker = new Array(event_length);
+        var lat = new Array(event_length);
+        var lng = new Array(event_length);
+        var latLng =new Array(event_length)
+        var i;
+        for (i = 0; i < events_list.length();i++) {
+          var nameArr = events_list[i].geolocation.split(',');
+          console.log(nameArr);
+          lat[i]=events_list[i].geolocation.latitude
+          long[i]=events_list[i].geolocation.longitude
+        }
         const charlottesville = { lat: 38.055080, lng: -78.496932 };
-        // The map, centered at Uluru
         const map = new google.maps.Map(document.getElementById("map"), {
           zoom: 17,
           center: charlottesville,
         });
-        // The marker, positioned at Uluru
-        const marker = new google.maps.Marker({
-          position: charlottesville,
-          map: map,
-        });
+
+        for (i = 0; i < event_length;i++) {
+           latLng[i]=new google.maps.LatLng(lat[i].latitude,
+           long[i].longitude);
+           marker[i] = new google.maps.Marker({
+            position: latlng,
+            map: map,
+          });
+        }
+        
       }
     </script>
 </head>
@@ -57,10 +72,12 @@
       <div class="container">
           <ul class="list-group list-group-flush">
           {% for event in events_list%}
-            <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}</a></li>
+            <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}<br>{{event.geolocation}}</a></li>
           {%endfor%}
           </ul>
-          <div id="map"></div>
+          <div id="map">
+            <p>{{events_list}}</p>
+          </div>
         </div>
       {% else %}
           <p>No events have been posted.</p>
