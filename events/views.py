@@ -24,13 +24,22 @@ def index(request):
 def Map(request):
     return render(request,'events/map.html',{})
 
-class EventsView(generic.ListView):
+# class EventsView(generic.ListView):
+#     model = Event
+#     template_name = 'events/event_list.html'
+#     context_object_name = 'events_list'
+#     lengthx=(Event.objects.all().count())
+#     events_list=Event.objects.all()
+#     def get_queryset(self):
+#         return Event.objects.all()
+
+def EventsView(request):
     model = Event
     template_name = 'events/event_list.html'
-    context_object_name = 'events_list'
-
-    def get_queryset(self):
-        return Event.objects.all()
+    events_list=Event.objects.all()
+    context_object_name = {'events_list' : events_list}
+    # lengthx=(Event.objects.all().count())
+    return render(request,'events/event_list.html',{'events_list' : Event.objects.all()})
 
 
 class DetailView(generic.DetailView):
