@@ -18,7 +18,6 @@ class Event(models.Model):
     description_text = models.CharField(max_length=200)
     address = map_fields.AddressField(max_length=200)
     geolocation = map_fields.GeoLocationField(max_length=100)
-
     def __str__(self):
         return self.title_text
     """"
