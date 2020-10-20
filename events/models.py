@@ -7,6 +7,7 @@
 
 from django.db import models
 from django.urls import reverse
+from django_google_maps import fields as map_fields
 
 # Create your models here.
 class Event(models.Model):
@@ -15,6 +16,8 @@ class Event(models.Model):
     time_text = models.CharField(max_length=20)
     category_text = models.CharField(max_length=50)
     description_text = models.CharField(max_length=200)
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
 
     def __str__(self):
         return self.title_text
