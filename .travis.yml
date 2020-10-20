@@ -7,8 +7,10 @@ deploy:
     repo: uva-cs3240-f20/project-1-21
 install: 
   - "pip install -r requirements.txt"
-langauge: python
+language: python
 python: 
   - "3.7.6"
 script: 
+  - "python manage.py makemigrations"
+  - "python manage.py migrate"
   - "python manage.py test social_app"
