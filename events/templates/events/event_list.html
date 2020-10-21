@@ -39,10 +39,18 @@
       <div class="container">
           <ul class="list-group list-group-flush">
           {% for event in events_list%}
-            <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}<br>{{event.geolocation}}</a></li>
+            <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}</a></li>
           {%endfor%}
           </ul>
-            
+          <style type="text/css">
+            /* Set the size of the div element that contains the map */
+            #map {
+              height: 400px;
+              /* The height is 400 pixels */
+              width: 100%;
+              /* The width is the width of the web page */
+            }
+          </style>
           <script type="text/javascript">  
             var map;
             // var event_list="{{events_list}}";
@@ -74,30 +82,30 @@
                     },
                   }
                  {% for event in events_list.all %}
-                 var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
-                 var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: icons["food"].icon,
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-                });
-                marker['infowindow']  = new google.maps.InfoWindow({
-                     content: "<h1>{{event.title_text}}</h1> <br> {{ event.location_text }} <br> {{event.category_text}} ",
-                });
-                marker.addListener("click",toggleBounce);
-                google.maps.event.addListener(marker, 'click', function() {
-                //window.location.href = this.url;
-                 this['infowindow'].open(map, this);
-                });
-                google.maps.event.addListener(marker, 'mouseover', function() {
+                    var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
+                    var marker=new google.maps.Marker({
+                      position: point,
+                      map: map,
+                      icon: {url:icons["food"].icon,scaledSize: new google.maps.Size(30, 30)},
+                      animation: google.maps.Animation.DROP,
+                      title:'{{event.title_text}}',
+                    });
+                    marker['infowindow']  = new google.maps.InfoWindow({
+                        content: "<b>{{event.title_text}}</b> <br> Location: {{ event.location_text }} <br> Category: {{event.get_category_text_display}} ",
+                    });
+                    marker.addListener("click",toggleBounce);
+                    google.maps.event.addListener(marker, 'click', function() {
+                    //window.location.href = this.url;
                     this['infowindow'].open(map, this);
-                });
-                google.maps.event.addListener(marker, 'mouseout', function() {
-                    this['infowindow'].close(map, this);
-                });
+                    });
+                    google.maps.event.addListener(marker, 'mouseover', function() {
+                        this['infowindow'].open(map, this);
+                    });
+                    google.maps.event.addListener(marker, 'mouseout', function() {
+                        this['infowindow'].close(map, this);
+                    });
 
-                marker.setMap(map);
+                    marker.setMap(map);
                {% endfor %}
             }
             function toggleBounce() {
@@ -149,7 +157,8 @@
       margin-bottom: auto;
       width: 400px;
       background-color: rgba(238, 238, 238, 0.5) !important;
-  }</style>
+    }
+    </style>
     <div class="container">
       <div class="card">
         <div class="card-header">

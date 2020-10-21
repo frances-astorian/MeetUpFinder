@@ -51,13 +51,17 @@ class DetailView(generic.DetailView):
 def postEventForm(request):
     form = EventForm(request.POST or None)
     if form.is_valid():
+        """
         name = form.cleaned_data['title_text']
         location = form.cleaned_data['location_text']
-        time = form.cleaned_data['time_text']
+        time = form.cleaned_data['time']
+        date=form.cleaned_data['date']
         category = form.cleaned_data['category_text']
         description = form.cleaned_data['description_text']
+        address1 = form.cleaned_data['address']
         e = Event(title_text = name, location_text = location, 
-            time_text = time, category_text = category, description_text = description)
-        e.save()
+           date=date, time = time, category_text = category, description_text = description, address = address1)
+           """
+        form.save()
     context = {'form': form}
     return render(request, 'events/post_event.html', context)

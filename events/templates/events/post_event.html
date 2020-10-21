@@ -24,9 +24,27 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-
     <form action="{% url 'events:post_event' %}" method="post">
-        {% csrf_token %}
+      {% csrf_token %}
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="text-center login-title">Create New Event</h3>
+          </div>
+          <div class="card-body">
+            {{ form.as_p }}
+          </div>
+          <div class="card-footer">
+            <div class = "d-flex justify-content-center links">
+              <button type="submit" class="save btn btn-default">Post Event</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        
+        
+        <!--
           <label for="title_text">Event Name:</label><br>
           <input type="text" style="width:300px"id='title_text' name = "title_text" maxlength = '200'><br>
           <p></p>
@@ -38,6 +56,13 @@
           <p></p>
           <label for="category_text">Event Category:</label><br>
           <input type="text" style="width:300px"id='category_text' name = "category_text" maxlength = '200'><br>
+          <select id='category_text' name = 'category_text' >
+            <option value = 'food'>Food</option>
+            <option value = 'career'>Food</option>
+            <option value = 'physical'>Physical Activity</option>
+            <option value = 'civic'>Civic Engagement</option>
+            <option value = 'other'>Other</option>
+          </select>
           <p></p>
           <label for="description_text">Event Description:</label><br>
           <textarea class = "form-control" id='description_text' name='description_text' rows='4'></textarea>
@@ -46,6 +71,7 @@
           <input class = "form-control" id='address' name='address' maxlength = '200'><br>
           <p><br></p>
           <input type="submit" class="btn btn-primary" value="Post Event">
+        -->
     </form>
 {% else %}
 <style>

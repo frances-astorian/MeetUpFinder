@@ -14,6 +14,10 @@
   <head>
     <meta charset="utf-8">
     <title>Event Detail View</title>
+    <script
+      async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&libraries=&v=weekly"
+      type="text/javascript"
+    ></script>
   </head>
   {% extends 'base.html' %}
   {% load static %}
@@ -28,24 +32,98 @@
         </thead>
         <tbody>
         <tr>
+          <th scope="row">Date</th>
+          <td>{{ event.date }}</td>
+        </tr><tr>
+          <th scope="row">Time</th>
+          <td>{{ event.time }}</td>
+        </tr>
+        <tr>
           <th scope="row">Location</th>
           <td>{{ event.location_text }}</td>
         </tr>
-        <tr>
-          <th scope="row">Time</th>
-          <td>{{ event.time_text }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Categories</th>
-          <td>{{ event.category_text }}</td>
-        </tr>
+        
         <tr>
           <th scope="row">Description</th>
           <td>{{ event.description_text }}</td>
         </tr>
+        <tr>
+          <th scope="row">Address</th>
+          <td>{{ event.address }}</td>
+        </tr>
         </tbody>
     </table>
-    </ul>
+    
+    <style type="text/css">
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+      }
+    </style>
+    <script type="text/javascript">  
+      var map;
+
+      function initMap() {
+        const charlottesville = { lat: 38.034837, lng: -78.5064309};
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 14,
+          center: charlottesville,
+        });
+        
+        google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
+      }
+      function addMarkers(){
+           const iconBase =
+             "http://maps.google.com/mapfiles/kml/shapes/";
+           const icons = {
+              parking: {
+                icon: iconBase + "parking_lot.png",
+              },
+              food: {
+                icon: iconBase + "convenience.png",
+              },
+            }
+              var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
+              var marker=new google.maps.Marker({
+                position: point,
+                map: map,
+                icon: {url:icons["food"].icon,scaledSize: new google.maps.Size(30, 30)},
+                animation: google.maps.Animation.DROP,
+                title:'{{event.title_text}}',
+              });
+              marker['infowindow']  = new google.maps.InfoWindow({
+                  content: "<h1>{{event.title_text}}</h1> <br> {{ event.location_text }} <br> {{event.category_text}} ",
+              });
+              marker.addListener("click",toggleBounce);
+              google.maps.event.addListener(marker, 'click', function() {
+              //window.location.href = this.url;
+              this['infowindow'].open(map, this);
+              });
+              google.maps.event.addListener(marker, 'mouseover', function() {
+                  this['infowindow'].open(map, this);
+              });
+              google.maps.event.addListener(marker, 'mouseout', function() {
+                  this['infowindow'].close(map, this);
+              });
+
+              marker.setMap(map);
+      }
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } 
+        else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <div id="map">
+    </div>
+  </ul>
     {% endblock %}
   </body>
 </html>
