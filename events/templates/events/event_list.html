@@ -9,7 +9,7 @@
     <title>Events List</title>
 
     <script
-      async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&libraries=&v=weekly"
+      async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&region=US&libraries=&v=weekly"
       type="text/javascript"
     ></script>
     <style type="text/css">
@@ -43,7 +43,7 @@
       {% if events_list %}
           <ul class="list-group list-group-flush">
             {% for event in events_list%}
-              <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}</a></li>
+              <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.location}}</a></li>
               {%endfor%}
           <style type="text/css">
             /* Set the size of the div element that contains the map */
@@ -79,7 +79,7 @@
                   var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
                   var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/movies.png";
                  {% for event in events_list.all %}
-                    var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
+                    var point = new google.maps.LatLng("{{event.location.latitude}}","{{event.location.longitude}}");
                     var category="{{event.category_text}}";
                     if(category=== '1'||category==='Food'){
                       var marker=new google.maps.Marker({
