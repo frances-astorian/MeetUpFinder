@@ -13,10 +13,9 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404
 
-
 from .forms import EventForm
 from .models import Event
-
+import datetime
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. This is for events.")
@@ -24,22 +23,30 @@ def index(request):
 def Map(request):
     return render(request,'events/map.html',{})
 
-# class EventsView(generic.ListView):
-#     model = Event
-#     template_name = 'events/event_list.html'
-#     context_object_name = 'events_list'
-#     lengthx=(Event.objects.all().count())
-#     events_list=Event.objects.all()
-#     def get_queryset(self):
-#         return Event.objects.all()
-
-def EventsView(request):
+class EventsView(generic.ListView):
     model = Event
     template_name = 'events/event_list.html'
-    events_list=Event.objects.all()
-    context_object_name = {'events_list' : events_list}
-    # lengthx=(Event.objects.all().count())
-    return render(request,'events/event_list.html',{'events_list' : Event.objects.all()})
+    context_object_name = 'events_list'
+    result = Event.objects.all()
+    def get_queryset(self):
+        result=  Event.objects.exclude(date__lte=datetime.date.today())
+        # query = self.request.GET.get('search')
+        # if query:
+        #     postresult = Event.objects.filter(title_text=query)
+        #     result = postresult
+        return result
+
+# def EventsView(request):
+#     model = Event
+#     template_name = 'events/event_list.html'
+#     events_list=Event.objects.all()
+#     context_object_name = {'events_list' : events_list}
+#     # lengthx=(Event.objects.all().count())
+#     # if (request.method=='GET'):
+#     #     {
+#     #        search_query = request.GET.get('search', None);
+#     #     }
+#     return render(request,'events/event_list.html',{'events_list' : Event.objects.all()})
 
 
 class DetailView(generic.DetailView):
@@ -51,17 +58,17 @@ class DetailView(generic.DetailView):
 def postEventForm(request):
     form = EventForm(request.POST or None)
     if form.is_valid():
-        """
-        name = form.cleaned_data['title_text']
-        location = form.cleaned_data['location_text']
-        time = form.cleaned_data['time']
-        date=form.cleaned_data['date']
-        category = form.cleaned_data['category_text']
-        description = form.cleaned_data['description_text']
-        address1 = form.cleaned_data['address']
-        e = Event(title_text = name, location_text = location, 
-           date=date, time = time, category_text = category, description_text = description, address = address1)
-           """
+        
+        # name = form.cleaned_data['title_text']
+        # location = form.cleaned_data['location_text']
+        # time = form.cleaned_data['time']
+        # date=form.cleaned_data['date']
+        # category = form.cleaned_data['category_text']
+        # description = form.cleaned_data['description_text']
+        # address1 = form.cleaned_data['address']
+        # e = Event(title_text = name, location_text = location, 
+        #    date=date, time = time, category_text = category, description_text = description, address = address1)
+        
         form.save()
     context = {'form': form}
     return render(request, 'events/post_event.html', context)
