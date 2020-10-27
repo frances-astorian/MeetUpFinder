@@ -35,13 +35,16 @@
       <a class = "btn btn-dark" href="{% url 'events:post_event' %}" role = "button">Post New Event</a><br><br>
     </div>
     <body>
-      {% if events_list %}
       <div class="container">
+        <form class="add_your_class" method="GET" action="" >
+          <input class="add_your_class" type="search" name="search"> 
+          <button class="add_your_class" type="submit"> Search </button>
+        </form>
+      {% if events_list %}
           <ul class="list-group list-group-flush">
-          {% for event in events_list%}
+            {% for event in events_list%}
             <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}</a></li>
-          {%endfor%}
-          </ul>
+            {%endfor%}
           <style type="text/css">
             /* Set the size of the div element that contains the map */
             #map {
@@ -59,8 +62,6 @@
             // {% for event in events_list.all %}
             //   eventlist_geolocation.push("{{event.geolocation.lat}}");
             // {% endfor %}
-
-            
             function initMap() {
               const charlottesville = { lat: 38.034837, lng: -78.5064309};
               map = new google.maps.Map(document.getElementById("map"), {
@@ -74,22 +75,67 @@
                  const iconBase =
                    "http://maps.google.com/mapfiles/kml/shapes/";
                  const icons = {
-                    parking: {
-                      icon: iconBase + "parking_lot.png",
-                    },
-                    food: {
+                    Food: {
                       icon: iconBase + "convenience.png",
                     },
+                    Career: {
+                      icon: iconBase + "info.png",
+                    },
                   }
+                  var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
+                  var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/movies.png";
                  {% for event in events_list.all %}
                     var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
-                    var marker=new google.maps.Marker({
-                      position: point,
-                      map: map,
-                      icon: {url:icons["food"].icon,scaledSize: new google.maps.Size(30, 30)},
-                      animation: google.maps.Animation.DROP,
-                      title:'{{event.title_text}}',
-                    });
+                    var category="{{event.category_text}}";
+                    console.log(category);
+                    if(category=== '1'||category==='Food'){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        icon: {url:icons["Food"].icon,
+                        scaledSize: new google.maps.Size(30, 30)},
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
+                    else if(category=== '2'||category==='Career'){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        icon: {url:icons["Career"].icon,
+                        scaledSize: new google.maps.Size(30, 30)},
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
+                    else if(category=== '3'||category==="Physical Activity"){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        icon: {url:physical_activity,
+                        scaledSize: new google.maps.Size(30, 30)},
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
+                    else if(category=== '4'||category==="Civic Engagement"){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        icon: {url:civic_engagement,
+                        scaledSize: new google.maps.Size(30, 30)},
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
+                    else if(category==='5'||category==="Other"){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
                     marker['infowindow']  = new google.maps.InfoWindow({
                         content: "<b>{{event.title_text}}</b> <br> Location: {{ event.location_text }} <br> Category: {{event.get_category_text_display}} ",
                     });
@@ -117,31 +163,8 @@
               }
             }
             google.maps.event.addDomListener(window, 'load', initialize);
-            
-              // var event_length=events_list.length();
-              // var marker = new Array(event_length);
-              // var lat = new Array(event_length);
-              // var lng = new Array(event_length);
-              // var latLng =new Array(event_length)
-              // var i;
-              // for (i = 0; i < events_list.length();i++) {
-              //   var nameArr = events_list[i].geolocation.split(',');
-              //   console.log(nameArr);
-              //   lat[i]=events_list[i].geolocation.latitude
-              //   long[i]=events_list[i].geolocation.longitude
-              // }
-              
-              // for (i = 0; i < event_length;i++) {
-              //    latLng[i]=new google.maps.LatLng(lat[i].latitude,
-              //    long[i].longitude);
-              //    marker[i] = new google.maps.Marker({
-              //     position: latlng,
-              //     map: map,
-              //   });
-              // }
           </script>
           <div id="map">
-            <!-- <p>{{events_list}}</p> -->
           </div>
         </div>
       {% else %}
