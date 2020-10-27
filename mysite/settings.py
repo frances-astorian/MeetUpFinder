@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',   
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'events'
+    'events',
+    'places',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +157,9 @@ SOCIALACCOUNT_PROVIDERS = {
 #google maps api key
 GOOGLE_MAPS_API_KEY = 'AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U'
 
+
+PLACES_MAPS_API_KEY='AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U'
+PLACES_MAP_WIDGET_HEIGHT=450
+# PLACES_PLACES_OPTIONS='{componentRestrictions: {country: "US"}}'
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.0335529, "lng": -78.5079772 }, "zoom": 15}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
