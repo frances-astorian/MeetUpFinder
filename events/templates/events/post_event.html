@@ -14,9 +14,11 @@
 <head>
     {% extends 'base.html' %}
     {% load socialaccount %}
-    <script
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&libraries=&v=weekly"
-    ></script>
+    <!-- <script
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&libraries=places"
+    ></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&region=US&libraries=places"> </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -26,30 +28,73 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
+
     <form action="{% url 'events:post_event' %}" method="post">
       {% csrf_token %}
+      <!-- <script>
+        var searchInput='search_input';
+        alert("entered script");
+        $(document).ready(function(){
+          alert("YO");
+          var autocomplete=new google.maps.places.Autocomplete((document.getElementById(searchInput)),{
+              types:['geocode'],
+          });
+          console.log("after autocomplete");
+          google.maps.event.addListener(autocomplete,'place_changed',function(){
+            var near_place=autocomplete.getPlace();
+          });
+          console.log("after listener");
+        });
+        console.log("EXIT");
+      </script> -->
       <div class="container">
         <div class="card">
           <div class="card-header">
             <h3 class="text-center login-title">Create New Event</h3>
           </div>
-          <div class="card-body">
+           <div class="card-body">
             {{ form.as_p }}
-            {{form.media}}
-          </div>
+            {{ form.media }}
+            <!-- <label for="title_text">Event Name:</label><br>
+            <input type="text" style="width:300px"id='title_text' name = "title_text" maxlength = '200'><br>
+            <p></p>
+            <label for="location_text">Event Location:</label><br>
+            <input type="text" style="width:300px"id='location_text' name = "location_text" maxlength = '200'><br>
+            <p></p>
+            <label for="date">Event Date:</label><br>
+            <input type="text" style="width:300px"id='date' name = "date" maxlength = '200'><br>
+            <p></p>
+            <label for="time">Event Time:</label><br>
+            <input type="text" style="width:300px"id='time' name = "date" maxlength = '200'><br>
+            <p></p>
+            <label for="category_text">Event Category:</label><br>
+            <input type="text" style="width:300px"id='category_text' name = "category_text" maxlength = '200'><br>
+            <select id='category_text' name = 'category_text' >
+              <option value = 'food'>Food</option>
+              <option value = 'career'>Food</option>
+              <option value = 'physical'>Physical Activity</option>
+              <option value = 'civic'>Civic Engagement</option>
+              <option value = 'other'>Other</option>
+            </select>
+            <p></p>
+            <label for="description_text">Event Description:</label><br>
+            <textarea class = "form-control" id='description_text' name='description_text' rows='4'></textarea>
+            <p></p>
+            <label for="address">Event Address:</label><br>
+            <input class = "form-control" id="search_input" placeholder = "Type Address..." type="text" name='address' maxlength = '200'><br>        
+            <p><br></p>
+            <input type="submit" class="btn btn-primary" value="Post Event">
+          </div> -->
           <div class="card-footer">
             <div class = "d-flex justify-content-center links">
               <a action= "{% url 'events:post_event' %}">
                <button type="submit" class="btn btn-primary" >Post Event</button>
               </a>
-              </div>
-          </div>
+            </div>
+          </div> 
         </div>
       </div>
-        
-        
-        
-        <!--
+              <!--
           <label for="title_text">Event Name:</label><br>
           <input type="text" style="width:300px"id='title_text' name = "title_text" maxlength = '200'><br>
           <p></p>
