@@ -8,11 +8,20 @@
 # *  Comment: Used for help writing EventForm class
 from django import forms
 from .models import Event
-from django_google_maps import widgets as map_widgets
-from django_google_maps import fields as map_fields
+# from django_google_maps import widgets as map_widgets
+# from django_google_maps import fields as map_fields
+from places.fields import PlacesField
+
+# from mapwidgets.widgets import GooglePointFieldWidget
 import json
 from datetime import date as currDate
 
+CUSTOM_MAP = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'us'}}),
+    ),
+}
 class EventForm(forms.ModelForm):
     def clean_date(self):
             date=self.cleaned_data['date']
@@ -21,14 +30,14 @@ class EventForm(forms.ModelForm):
             return date
     class Meta:
         model=Event
-        #fields="__all__"
-        fields = ["title_text", "location_text", "time", "date","category_text","description_text","address"]
-        
-        widgets = {
-            'address':map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap','data-autocomplete-options': json.dumps({ 'types': ['geocode','establishment'], 'componentRestrictions': {
-                  'country': 'us'
-              }
-          })}
-          )
-        }
+        fields = ["title_text", "location_text", "time", "date","category_text","description_text","location"]
+        # fields = ["title_text", "location_text", "time", "date","category_text","description_text","address","location"]       
+        # widgets = {
+        #     # 'address':GoogleMapsAddressWidget(settings=CUSTOM_MAP),
+        #     'address':map_widgets.GoogleMapsAddressWidget(attrs={'data-map-type': 'roadmap','data-autocomplete-options': json.dumps({ 'types': ['geocode','establishment'], 'componentRestrictions': {
+        #           'country': 'us'
+        #       }
+        #   })}
+        #   )
+        # }
        
