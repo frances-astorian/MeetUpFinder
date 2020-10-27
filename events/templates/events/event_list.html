@@ -43,8 +43,8 @@
       {% if events_list %}
           <ul class="list-group list-group-flush">
             {% for event in events_list%}
-            <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}</a></li>
-            {%endfor%}
+              <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.address}}</a></li>
+              {%endfor%}
           <style type="text/css">
             /* Set the size of the div element that contains the map */
             #map {
@@ -56,12 +56,6 @@
           </style>
           <script type="text/javascript">  
             var map;
-            // var event_list="{{events_list}}";
-            // var eventlist_geolocation=[];
-            var event_count= "{{events_list.count}}";
-            // {% for event in events_list.all %}
-            //   eventlist_geolocation.push("{{event.geolocation.lat}}");
-            // {% endfor %}
             function initMap() {
               const charlottesville = { lat: 38.034837, lng: -78.5064309};
               map = new google.maps.Map(document.getElementById("map"), {
@@ -87,7 +81,6 @@
                  {% for event in events_list.all %}
                     var point = new google.maps.LatLng("{{event.geolocation.lat}}","{{event.geolocation.lon}}");
                     var category="{{event.category_text}}";
-                    console.log(category);
                     if(category=== '1'||category==='Food'){
                       var marker=new google.maps.Marker({
                         position: point,
@@ -150,7 +143,6 @@
                     google.maps.event.addListener(marker, 'mouseout', function() {
                         this['infowindow'].close(map, this);
                     });
-
                     marker.setMap(map);
                {% endfor %}
             }
