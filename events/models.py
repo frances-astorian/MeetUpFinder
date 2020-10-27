@@ -24,7 +24,7 @@ class Event(models.Model):
     location_text = models.CharField("Location", max_length=100)
     date = models.DateField(default=datetime.date.today)
     #time_text = models.CharField("Time", max_length=20)
-    time = models.TimeField(default = '14:30')
+    time = models.TimeField(default = '14:30',help_text="Enter in 24 hour format (eg - 2:45 or 16:45)")
     category_text = models.CharField("Category", max_length=50,
         choices = CATEGORY_CHOICES,
         default = '1')
