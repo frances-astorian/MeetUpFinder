@@ -8,6 +8,8 @@
 from django.db import models
 from django.urls import reverse
 from django_google_maps import fields as map_fields
+from places.fields import PlacesField
+
 import datetime
 
 CATEGORY_CHOICES = (
@@ -29,8 +31,9 @@ class Event(models.Model):
         choices = CATEGORY_CHOICES,
         default = '1')
     description_text = models.CharField("Description", max_length=200)
-    address = map_fields.AddressField("Address", max_length=200)
-    geolocation = map_fields.GeoLocationField(max_length=100)
+    # address = map_fields.AddressField("Address", max_length=200)
+    # geolocation = map_fields.GeoLocationField(max_length=100)
+    location=PlacesField()
     def __str__(self):
         return self.title_text
     """"
