@@ -14,7 +14,9 @@
 <head>
     {% extends 'base.html' %}
     {% load socialaccount %}
-
+    <script
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvXIF-axqigiDEH_KQQIpHgMrWY9F2U&callback=initMap&libraries=&v=weekly"
+    ></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -33,11 +35,14 @@
           </div>
           <div class="card-body">
             {{ form.as_p }}
+            {{form.media}}
           </div>
           <div class="card-footer">
             <div class = "d-flex justify-content-center links">
-              <button type="submit" class="save btn btn-default">Post Event</button>
-            </div>
+              <a action= "{% url 'events:post_event' %}">
+               <button type="submit" class="btn btn-primary" >Post Event</button>
+              </a>
+              </div>
           </div>
         </div>
       </div>
