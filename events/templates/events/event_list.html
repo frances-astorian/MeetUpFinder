@@ -36,14 +36,14 @@
     </div>
     <body>
       <div class="container">
-        <form class="add_your_class" method="GET" action="" >
-          <input class="add_your_class" type="search" name="search"> 
-          <button class="add_your_class" type="submit"> Search </button>
+        <form method="GET" action="{% url 'events:search' %}">
+            <input name="q" value="{{request.GET.q}}" placeholder="search">
+            <button class="btn btn-success" type="submit">Search</button>
         </form>
       {% if events_list %}
           <ul class="list-group list-group-flush">
             {% for event in events_list%}
-              <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></b><br> {{event.description_text}}<br>{{event.location}}</a></li>
+              <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b></form><br> {{event.description_text}}<br>{{event.location}}</a></li>
               {%endfor%}
           <style type="text/css">
             /* Set the size of the div element that contains the map */

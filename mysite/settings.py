@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'events',
     'places',
+    "django_filters",
 ]
 
 MIDDLEWARE = [

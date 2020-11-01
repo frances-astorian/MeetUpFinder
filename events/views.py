@@ -12,9 +12,12 @@ from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from .forms import EventForm
 from .models import Event
+#from .filters import eventFilter
+
 import datetime
 # Create your views here.
 def index(request):
@@ -26,8 +29,9 @@ class EventsView(generic.ListView):
     template_name = 'events/event_list.html'
     context_object_name = 'events_list'
     result = Event.objects.all()
+    #myFilter = eventFilter()
     def get_queryset(self):
-        result=  Event.objects.exclude(date__lte=datetime.date.today())
+        result = Event.objects.exclude(date__lte=datetime.date.today())
         # query = self.request.GET.get('search')
         # if query:
         #     postresult = Event.objects.filter(title_text=query)
@@ -70,3 +74,26 @@ def postEventForm(request):
         form.save()
     context = {'form': form}
     return render(request, 'events/post_event.html', context)
+
+#new....for searching
+# def get_query_set(request):
+#     queryset = []
+#     queries = query.split(" ")
+#     for q in queries:
+#         posts = Event.objects.filter(
+#             Q(title__icontains=q)|
+#             Q(body__icontains=q)
+#         ).distinct()
+#
+#         for post in posts:
+#             queryset.append(post)
+#
+#     return list(set(queryset))
+
+def search(request):
+    template = 'events/event_list.html'
+
+    query = request.GET.get('q')
+    results = Event.objects.filter(Q(title_text__icontains=query) | Q(description_text__icontains=query)).exclude(date__lte=datetime.date.today())
+    context = {"events_list": results}
+    return render(request, template, context)
