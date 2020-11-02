@@ -70,6 +70,7 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">Search</button>
+              <a class = "btn btn-primary" href="{% url 'events:event_list' %}" role = "button">Clear Search</a><br><br>
             </form>
       {% if events_list %}
           <ul class="list-group list-group-flush">
