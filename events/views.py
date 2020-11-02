@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from .forms import EventForm
-from .models import Event
+from .models import Event, CATEGORY_CHOICES
 #from .filters import eventFilter
 
 import datetime
@@ -89,11 +89,50 @@ def postEventForm(request):
 #             queryset.append(post)
 #
 #     return list(set(queryset))
+def is_valid_search(param):
+    return param != '' and param is not None
 
 def search(request):
     template = 'events/event_list.html'
 
-    query = request.GET.get('q')
-    results = Event.objects.filter(Q(title_text__icontains=query) | Q(description_text__icontains=query)).exclude(date__lte=datetime.date.today())
+    results = Event.objects.all()
+
+    title_contains = request.GET.get('title_contains')
+    description_contains = request.GET.get('description_contains')
+    location_contains = request.GET.get('location_contains')
+    event_date = request.GET.get('event_date')
+    event_time = request.GET.get('event_time')
+    category = request.GET.get('category')
+
+
+    if is_valid_search(title_contains):
+        results = results.filter(Q(title_text__icontains=title_contains))
+
+    if is_valid_search(description_contains):
+        results = results.filter(Q(description_text__icontains=description_contains))
+
+    if is_valid_search(location_contains):
+        results = results.filter(Q(location_text__icontains=location_contains))
+
+    if is_valid_search(event_date):
+        results = results.filter(date=event_date)
+
+
+    if is_valid_search(event_time):
+        results = results.filter(time=event_time)
+
+    if is_valid_search(category) and category != "Choose...":
+        results = results.filter(category_text=category)
+
+    results = results.exclude(date__lte=datetime.date.today())
     context = {"events_list": results}
+
     return render(request, template, context)
+
+# def search(request):
+#     template = 'events/event_list.html'
+#
+#     query = request.GET.get('q')
+#     results = Event.objects.filter(Q(title_text__icontains=query) | Q(description_text__icontains=query)).exclude(date__lte=datetime.date.today())
+#     context = {"events_list": results}
+#     return render(request, template, context)
