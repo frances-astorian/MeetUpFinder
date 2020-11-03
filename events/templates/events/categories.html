@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<head>
+  {% extends 'base.html' %}
+  {% load static %}
+  {% load socialaccount %}
+  <title>Categories</title>
+  
+</head>
+<body>
+{% block content %}
+{% if user.is_authenticated %}
+{% if category_events %}
+    <h3>{{ cats }} Events </h3>
+    {% for event in category_events %}
+        <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
+    {% endfor %}
+{% else %}
+    <h3>No Events in {{cats}} Category</h3>
+{% endif %}
+
+
+<br><br>
+<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+
+
+{% else %}
+<style>
+.container { height: 100%; width: 100%; justify-content: center !important; }
+.card{
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+  background-color: rgba(238, 238, 238, 0.5) !important;
+}</style>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="text-center login-title">Sign In</h3>
+    </div>
+    <div class="card-body">
+      <p>Click "Login" to sign in with your Hoos2Meet Credentials.</p><br>
+      <a class = "btn btn-dark" href="/accounts/login" role = "button">Login</a><br>
+    </div>
+    <div class="card-footer">
+      <div class = "d-flex justify-content-center links">
+        <p>Don't have an account? <br></p> <a href="{% provider_login_url 'google' %}"> SignUp with Google</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %} 
+</body>
+</html>

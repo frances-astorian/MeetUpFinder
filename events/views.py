@@ -13,9 +13,13 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+
 
 from .forms import EventForm
-from .models import Event, CATEGORY_CHOICES
+from .models import Event, CATEGORY_CHOICES, Category
 #from .filters import eventFilter
 
 import datetime
@@ -23,12 +27,20 @@ import datetime
 def index(request):
     return HttpResponse("Hello, world. This is for events.")
 
+def event_success(request):
+    return render(request,'events/event_success.html')
+
+def CategoryListView(request):
+    cat_menu_list = Category.objects.all()
+    return render(request, 'events/category_list.html', {'cat_menu_list':cat_menu_list})
+
 
 class EventsView(generic.ListView):
     model = Event
     template_name = 'events/event_list.html'
     context_object_name = 'events_list'
     result = Event.objects.all()
+    #ordering = ['-date']
     #myFilter = eventFilter()
     def get_queryset(self):
         result = Event.objects.exclude(date__lte=datetime.date.today())
@@ -37,6 +49,15 @@ class EventsView(generic.ListView):
         #     postresult = Event.objects.filter(title_text=query)
         #     result = postresult
         return result
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context=super(EventsView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"]=cat_menu
+        return context
+
+def CategoryView(request, cats):
+    category_events = Event.objects.filter(category_text=cats)
+    return render(request, 'events/categories.html', {'cats':cats, 'category_events':category_events})
 
 # def EventsView(request):
 #     model = Event
@@ -55,11 +76,23 @@ class DetailView(generic.DetailView):
     model = Event
     template_name = 'events/detail.html'
     #context_object_name = 'detail'
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context=super(DetailView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"]=cat_menu
+        return context
 
+"""
+class EventFormView(FormView):
+    template_name = 'events/post_event.html'
+    form_class = EventForm
+    success_url = reverse_lazy('event_success')
+"""
 
 def postEventForm(request):
     form = EventForm(request.POST or None)
     if form.is_valid():
+        form.instance.organizer = request.user
         
         # name = form.cleaned_data['title_text']
         # location = form.cleaned_data['location_text']
@@ -72,6 +105,7 @@ def postEventForm(request):
         #    date=date, time = time, category_text = category, description_text = description, address = address1)
         
         form.save()
+        return HttpResponseRedirect('success/')
     context = {'form': form}
     return render(request, 'events/post_event.html', context)
 

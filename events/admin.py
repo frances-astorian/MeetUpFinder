@@ -4,7 +4,7 @@ from places.fields import PlacesField
 # from django_google_maps import widgets as map_widgets
 # from django_google_maps import fields as map_fields
 
-from .models import Event
+from .models import Event, Profile, Category
 
 
 class EventAdmin(admin.ModelAdmin): 
@@ -23,3 +23,5 @@ class EventAdmin(admin.ModelAdmin):
     
 # Register your models here.
 admin.site.register(Event,EventAdmin)
+admin.site.register(Profile)
+admin.site.register(Category)

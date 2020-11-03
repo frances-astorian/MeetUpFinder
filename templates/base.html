@@ -35,7 +35,23 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'events:event_list' %}">Events</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Profile</a></li>
+                    {% if cat_menu %}
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link py-3 px-0 px-lg-3 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Events by Category
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          {% for item in cat_menu %}
+                            <a class='dropdown-item' href="{%url 'events:category' item %}">{{item}}</a>
+                          {% endfor %}
+                        </div>
+                      </li>
+                    {%else%}
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'events:category-list' %}">Events by Category</a></li>
+                    {% endif %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{%url 'social_app:profile_page' user.id%}">Profile</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/accounts/logout">Logout</a></li>
+                    
                 </ul>
             </div>
         </div>

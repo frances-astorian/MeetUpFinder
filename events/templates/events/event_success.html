@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<head>
+  {% extends 'base.html' %}
+  {% load static %}
+  {% load socialaccount %}
+  <title>Google Registration</title>
+  
+</head>
+<body>
+{% block content %}
+{% if user.is_authenticated %}
+<h3>Your Event Was Created Successfully {{user.first_name}}!</h3>
+<br><br>
+<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+
+
+{% else %}
+<style>
+.container { height: 100%; width: 100%; justify-content: center !important; }
+.card{
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+  background-color: rgba(238, 238, 238, 0.5) !important;
+}</style>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="text-center login-title">Sign In</h3>
+    </div>
+    <div class="card-body">
+      <p>Click "Login" to sign in with your Hoos2Meet Credentials.</p><br>
+      <a class = "btn btn-dark" href="/accounts/login" role = "button">Login</a><br>
+    </div>
+    <div class="card-footer">
+      <div class = "d-flex justify-content-center links">
+        <p>Don't have an account? <br></p> <a href="{% provider_login_url 'google' %}"> SignUp with Google</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %} 
+</body>
+</html>

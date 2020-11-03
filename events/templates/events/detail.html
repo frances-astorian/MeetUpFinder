@@ -24,6 +24,12 @@
   <body>
     {% block content %}
     <h3 class = 'text-center'>{{ event.title_text }}</h1>
+      <div class = 'text-center'>
+        <a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+        <br><br>
+      </div>
+    {% if user.id == event.organizer.id %}
+    {% endif %}
     <ul>
     <table class="table table-striped">
         <thead>
@@ -31,6 +37,11 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
+          <th scope="row">Organizer Hoos2Meet Username</th>
+          <td>{{ event.organizer.username }}</td>
+        </tr>
+        
         <tr>
           <th scope="row">Date</th>
           <td>{{ event.date }}</td>
@@ -42,6 +53,10 @@
           <th scope="row">Location</th>
           <td>{{ event.location_text }}</td>
         </tr>
+        <tr>
+          <th scope="row">Category</th>
+          <td><a href = "{%url 'events:category' event.category_text%}">{{ event.category_text }}</a></td>
+        </tr>
         
         <tr>
           <th scope="row">Description</th>
@@ -49,8 +64,9 @@
         </tr>
         <tr>
           <th scope="row">Address</th>
-          <td>{{ event.address }}</td>
+          <td>{{ event.location }}</td>
         </tr>
+        
         </tbody>
     </table>
     
