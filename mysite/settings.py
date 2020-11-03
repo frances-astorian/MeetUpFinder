@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'events',
     'places',
     "django_filters",
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [

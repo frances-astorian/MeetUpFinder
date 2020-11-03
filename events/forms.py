@@ -7,7 +7,7 @@
 # *  Software License: N/A
 # *  Comment: Used for help writing EventForm class
 from django import forms
-from .models import Event
+from .models import Event, Category
 # from django_google_maps import widgets as map_widgets
 # from django_google_maps import fields as map_fields
 from places.fields import PlacesField
@@ -15,6 +15,11 @@ from places.fields import PlacesField
 # from mapwidgets.widgets import GooglePointFieldWidget
 import json
 from datetime import date as currDate
+
+choices = Category.objects.all().values_list('name', 'name')
+choice_list = []
+for item in choices:
+    choice_list.append(item)
 
 CUSTOM_MAP = {
     "GooglePointFieldWidget": (
@@ -30,7 +35,7 @@ class EventForm(forms.ModelForm):
             return date
     class Meta:
         model=Event
-        fields = ["title_text","location_text", "time", "date","category_text","description_text","location"]
+        fields = ["title_text","organizer","location_text", "time", "date","category_text","description_text","location"]
         # fields = ["title_text", "location_text", "time", "date","category_text","description_text","address","location"]       
         # widgets = {
         #     # 'address':GoogleMapsAddressWidget(settings=CUSTOM_MAP),
@@ -40,4 +45,7 @@ class EventForm(forms.ModelForm):
         #   })}
         #   )
         # }
+        widgets={
+            'category_text':forms.Select(choices = choice_list, attrs={'class':'form-control'})
+        }
        

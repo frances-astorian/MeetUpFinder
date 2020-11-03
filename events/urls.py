@@ -12,4 +12,6 @@ urlpatterns = [
     #path('post/', views.EventFormView.as_view(), name='post_event'),
     path('post/success/', views.event_success, name='event_success'),
     path('<int:pk>/', views.DetailView.as_view(), name = 'detail'),
+    path('category/<str:cats>/', views.CategoryView, name='category'),
+    path('category-list/', views.CategoryListView, name='category-list'),
     ]

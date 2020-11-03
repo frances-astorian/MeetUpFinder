@@ -4,24 +4,25 @@
   {% extends 'base.html' %}
   {% load static %}
   {% load socialaccount %}
-  <title>Edit Profile</title>
+  <title>Categories</title>
   
 </head>
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-<h3>Edit Profile</h3>
-<div class='form-group'>
-    <form method="Post">
-        {%csrf_token %}
-        <b>User Preferences:</b>
-        {{profile_form.as_p}}
-        <b>User Settings:</b>
-        {{user_form.as_p}}
-        
-        <button class='btn btn-secondary'>Update Profile</button>
-    </form>
-</div>
+{% if category_events %}
+    <h3>{{ cats }} Events </h3>
+    {% for event in category_events %}
+        <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
+    {% endfor %}
+{% else %}
+    <h3>No Events in {{cats}} Category</h3>
+{% endif %}
+
+
+<br><br>
+<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+
 
 {% else %}
 <style>
