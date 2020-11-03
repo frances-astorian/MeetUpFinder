@@ -24,6 +24,10 @@
   <body>
     {% block content %}
     <h3 class = 'text-center'>{{ event.title_text }}</h1>
+      <div class = 'text-center'>
+        <a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+        <br><br>
+      </div>
     <ul>
     <table class="table table-striped">
         <thead>
@@ -31,6 +35,11 @@
         </tr>
         </thead>
         <tbody>
+        <!-- <tr>
+          <th scope="row">Organizer</th>
+          <td>{{ event.organizer.username }}</td>
+        </tr>-->
+        
         <tr>
           <th scope="row">Date</th>
           <td>{{ event.date }}</td>
@@ -49,8 +58,9 @@
         </tr>
         <tr>
           <th scope="row">Address</th>
-          <td>{{ event.address }}</td>
+          <td>{{ event.location }}</td>
         </tr>
+        
         </tbody>
     </table>
     

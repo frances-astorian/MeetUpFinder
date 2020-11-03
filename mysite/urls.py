@@ -22,5 +22,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='social_app/index.html'), name = 'home'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('events/', include('events.urls'))
+    path('events/', include('events.urls')),
+    path('social/',include('social_app.urls'))
 ]

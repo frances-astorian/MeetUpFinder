@@ -4,14 +4,15 @@
     {% extends 'base.html' %}
     {% load static %}
     {% load socialaccount %}
-    <title>Google Registration</title>
+    <title>Welcome/title>
     
   </head>
   <body>
   {% block content %}
   {% if user.is_authenticated %}
-  <p>Welcome, {{ user.username }} !<br><br> You are logged in to Hoos2Meet</p>
-  <a href="/accounts/logout">Logout</a>
+  <p>Welcome, {{ user.first_name }} {{user.last_name}}! You are logged in to Hoos2Meet!</p>
+  <p class='small'>If your full name is not showing up above, go to Edit Profile to update your first and last name.</p>
+  <p></p>
 
   {% else %}
   <style>

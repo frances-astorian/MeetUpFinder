@@ -9,6 +9,10 @@ from django.db import models
 from django.urls import reverse
 from django_google_maps import fields as map_fields
 from places.fields import PlacesField
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 import datetime
 
@@ -33,6 +37,7 @@ class Event(models.Model):
     description_text = models.CharField("Description", max_length=200)
     # address = map_fields.AddressField("Address", max_length=200)
     # geolocation = map_fields.GeoLocationField(max_length=100)
+    #organizer = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)
     location=PlacesField()
     def __str__(self):
         return self.title_text
@@ -40,3 +45,23 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('events:detail', kwargs={'pk': self.pk})    
     """
+
+class Profile(models.Model):
+    user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    bio = models.TextField()
+    categories = models.CharField("Category", max_length=50,
+        choices = CATEGORY_CHOICES,
+        default = '1')
+    profile_pic=models.ImageField(null=True, blank=True, upload_to='images/profile/')
+    
+    def __str__(self):
+        return str(self.user)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

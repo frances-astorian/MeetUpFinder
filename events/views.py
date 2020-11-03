@@ -13,6 +13,10 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+
 
 from .forms import EventForm
 from .models import Event, CATEGORY_CHOICES
@@ -22,6 +26,9 @@ import datetime
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. This is for events.")
+
+def event_success(request):
+    return render(request,'events/event_success.html')
 
 
 class EventsView(generic.ListView):
@@ -56,10 +63,17 @@ class DetailView(generic.DetailView):
     template_name = 'events/detail.html'
     #context_object_name = 'detail'
 
+"""
+class EventFormView(FormView):
+    template_name = 'events/post_event.html'
+    form_class = EventForm
+    success_url = reverse_lazy('event_success')
+"""
 
 def postEventForm(request):
     form = EventForm(request.POST or None)
     if form.is_valid():
+        form.instance.organizer = request.user
         
         # name = form.cleaned_data['title_text']
         # location = form.cleaned_data['location_text']
@@ -72,6 +86,7 @@ def postEventForm(request):
         #    date=date, time = time, category_text = category, description_text = description, address = address1)
         
         form.save()
+        return HttpResponseRedirect('success/')
     context = {'form': form}
     return render(request, 'events/post_event.html', context)
 

@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import *
+from .models import Event
 
 class eventFilter(django_filters.FilterSet):
     class Meta:

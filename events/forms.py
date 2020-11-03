@@ -30,7 +30,7 @@ class EventForm(forms.ModelForm):
             return date
     class Meta:
         model=Event
-        fields = ["title_text", "location_text", "time", "date","category_text","description_text","location"]
+        fields = ["title_text","location_text", "time", "date","category_text","description_text","location"]
         # fields = ["title_text", "location_text", "time", "date","category_text","description_text","address","location"]       
         # widgets = {
         #     # 'address':GoogleMapsAddressWidget(settings=CUSTOM_MAP),
