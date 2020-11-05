@@ -10,7 +10,7 @@ from .models import Event
 class PracticeTest(TestCase):
     def testTest(self):
         self.assertTrue(True)
-
+"""
 class test_cases(self):
 	def create_event(title_text, location_text, date, time, category_text, description_text, address, geolocation):
 		return Event.objects.create(title_text=question_text, location_text=location_text, date = date, time = time, category_text = category_text, description_text=description_text, address=address,geolocation=geolocation)
@@ -34,4 +34,4 @@ class test_cases(self):
 		self.assertQuerysetEqual(
 			response.context['events_list'],
 			['<Event: future event>']
-		)
+		)"""
