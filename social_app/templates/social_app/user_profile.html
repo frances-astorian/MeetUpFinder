@@ -17,10 +17,13 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
-          <p class="card-text">{{user.profile.location}} <br>{{user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
-            <br>Age: {{user.profile.age}}</p>
-          <a href="{%url 'social_app:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+          <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</h5>
+          <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
+            <br>Age: {{profile.user.profile.age}}</p>
+            {% if user.id == profile.user.id %}
+                <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
+            {% endif %}
+            
         </div>
       </div>
     </div>

@@ -9,13 +9,15 @@ from django.contrib.auth.views import PasswordChangeView
 from events.models import Profile
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+
 
 
 # Create your views here.
 
 def password_success(request):
     return render(request,'social_app/passwords_success.html')
-"""
+
 class UserEditView(generic.UpdateView):
     form_class = EditProfileForm
     template_name = 'social_app/edit_profile.html'
@@ -23,25 +25,22 @@ class UserEditView(generic.UpdateView):
 
     def get_object(self):
         return self.request.user
-"""
 
+def update_profile_success(request):
+    return render(request,'social_app/profile_success.html')
 
 def update_profile(request):
     if request.method == 'POST':
-        user_form = EditProfileForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
+        if profile_form.is_valid():
             profile_form.save()
             messages.success(request, ('Your profile was successfully updated!'))
-            return redirect('home')
+            return HttpResponseRedirect('success/')
         else:
             messages.error(request, ('Please correct the error below.'))
     else:
-        user_form = EditProfileForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'social_app/edit_profile.html', {
-        'user_form': user_form,
+    return render(request, 'social_app/edit_prefs.html', {
         'profile_form': profile_form
     })
 
