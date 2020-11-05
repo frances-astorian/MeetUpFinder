@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 
-from .models import Event
+from events.models import Event
 # Create your tests here.
 class PracticeTest(TestCase):
     def testTest(self):
