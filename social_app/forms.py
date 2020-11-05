@@ -21,10 +21,14 @@ class ProfileForm(forms.ModelForm):
     bio=forms.CharField(max_length=500, widget=forms.Textarea(attrs={'class':'form-control'}))
     age=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}))
     location=forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
-    """categories = forms.MultipleChoiceField(required = False,
-        widget=forms.CheckboxSelectMultiple,
-        choices=choice_list,
-    )"""
+    
+    categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
     class Meta:
         model=Profile
         fields = ('bio', 'age', 'location', 'categories')
+    """def save(self, commit=True):
+        instance = forms.ModelForm.save(self)
+        instance.category_set.clear()
+        instance.category_set.add(*self.cleaned_data['categories'])
+        return instance"""
+            
