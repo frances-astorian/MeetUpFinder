@@ -33,7 +33,7 @@ def update_profile(request):
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
         if profile_form.is_valid():
-            profile_form.save(commit=False)
+            profile_form.save()
             #profile_form.save_m2m()
             messages.success(request, ('Your profile was successfully updated!'))
             return HttpResponseRedirect('success/')
