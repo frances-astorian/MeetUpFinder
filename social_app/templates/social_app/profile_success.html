@@ -4,25 +4,18 @@
   {% extends 'base.html' %}
   {% load static %}
   {% load socialaccount %}
-  <title>Profile Settings</title>
+  <title>Profile Update Success</title>
   
 </head>
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-<h3>Profile Settings</h3>
-<div class='form-group'>
-    <form method="Post">
-        {%csrf_token %}
-        {{form.as_p}}
-        <!--<b>User Preferences:</b>
-        {{profile_form.as_p}}
-        <b>User Settings:</b>
-        {{user_form.as_p}}!-->
-        
-        <button class='btn btn-secondary'>Update Profile</button>
-    </form>
-</div>
+<h3>Your Profile Was Updated Successfully {{user.first_name}}!</h3>
+<br><br>
+<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+<a class="btn btn-dark" href="{% url 'home' %}">Home</a></li>
+
+
 
 {% else %}
 <style>

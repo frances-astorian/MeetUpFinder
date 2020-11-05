@@ -90,9 +90,9 @@ class EventFormView(FormView):
 """
 
 def postEventForm(request):
-    form = EventForm(request.POST or None)
+    form = EventForm(user = request.user.id, data = request.POST or None)
     if form.is_valid():
-        form.instance.organizer = request.user
+        #form.instance.organizer = request.user
         
         # name = form.cleaned_data['title_text']
         # location = form.cleaned_data['location_text']

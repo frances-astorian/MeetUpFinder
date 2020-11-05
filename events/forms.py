@@ -11,6 +11,8 @@ from .models import Event, Category
 # from django_google_maps import widgets as map_widgets
 # from django_google_maps import fields as map_fields
 from places.fields import PlacesField
+from django.contrib.auth.models import User
+
 
 # from mapwidgets.widgets import GooglePointFieldWidget
 import json
@@ -28,6 +30,11 @@ CUSTOM_MAP = {
     ),
 }
 class EventForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        id =kwargs.pop('user')
+        super(EventForm, self).__init__(*args, **kwargs)
+        # access object through self.instance...
+        self.fields['organizer'].queryset = User.objects.filter(id=id)
     def clean_date(self):
             date=self.cleaned_data['date']
             if (date<currDate.today()):
@@ -48,4 +55,5 @@ class EventForm(forms.ModelForm):
         widgets={
             'category_text':forms.Select(choices = choice_list, attrs={'class':'form-control'})
         }
+        
        

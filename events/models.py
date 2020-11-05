@@ -52,9 +52,7 @@ class Category(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
-    categories = models.CharField("Category", max_length=50,
-        choices = CATEGORY_CHOICES,
-        default = '1')
+    categories = models.ManyToManyField(Category)
     #profile_pic=models.ImageField(null=True, blank=True, upload_to='images/profile/')
     location = models.CharField("Location", null=True,max_length=100)
     age = models.IntegerField(null=True)

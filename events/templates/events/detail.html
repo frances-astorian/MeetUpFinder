@@ -38,8 +38,8 @@
         </thead>
         <tbody>
         <tr>
-          <th scope="row">Organizer Hoos2Meet Username</th>
-          <td>{{ event.organizer.username }}</td>
+          <th scope="row">Organizer</th>
+          <td><a href = "{%url 'social_app:profile_page' event.organizer.id%}">{{ event.organizer.username }}</a></td>
         </tr>
         
         <tr>
