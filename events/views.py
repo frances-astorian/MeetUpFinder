@@ -34,6 +34,9 @@ def CategoryListView(request):
     cat_menu_list = Category.objects.all()
     return render(request, 'events/category_list.html', {'cat_menu_list':cat_menu_list})
 
+def YourEvents(request):
+    your_event_list = Event.objects.filter(organizer = request.user)
+    return render(request, 'events/your_events.html', {'your_event_list':your_event_list})
 
 class EventsView(generic.ListView):
     model = Event

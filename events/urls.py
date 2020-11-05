@@ -14,4 +14,5 @@ urlpatterns = [
     path('<int:pk>/', views.DetailView.as_view(), name = 'detail'),
     path('category/<str:cats>/', views.CategoryView, name='category'),
     path('category-list/', views.CategoryListView, name='category-list'),
+    path('your-events/', views.YourEvents, name='your_events'),
     ]
