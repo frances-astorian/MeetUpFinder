@@ -112,6 +112,9 @@
                   }
                   var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
                   var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/movies.png";
+                  var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
+                  var entertainment="http://maps.google.com/mapfiles/kml/shapes/movies.png";
+                  var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/police.png";
                  {% for event in events_list.all %}
                     var point = new google.maps.LatLng("{{event.location.latitude}}","{{event.location.longitude}}");
                     var category="{{event.category_text}}";
@@ -140,6 +143,16 @@
                         position: point,
                         map: map,
                         icon: {url:physical_activity,
+                        scaledSize: new google.maps.Size(30, 30)},
+                        animation: google.maps.Animation.DROP,
+                        title:'{{event.title_text}}',
+                     });
+                    }
+                    else if(category=== '6'||category==="Entertainment"){
+                      var marker=new google.maps.Marker({
+                        position: point,
+                        map: map,
+                        icon: {url:entertainment,
                         scaledSize: new google.maps.Size(30, 30)},
                         animation: google.maps.Animation.DROP,
                         title:'{{event.title_text}}',
