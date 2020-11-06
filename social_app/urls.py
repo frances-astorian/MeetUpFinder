@@ -16,4 +16,6 @@ urlpatterns = [
     path('password/', PasswordsChangeView.as_view(template_name='social_app/change-password.html')),
     path('password_success/', views.password_success, name='password_success'),
     path('<int:pk>/profile/', views.ProfileView.as_view(), name='profile_page'),
+    path('sendfriendrequestsuccess/',views.SendFriendReuqest, name='send_friend_request'),
+
     ]
