@@ -22,8 +22,15 @@ CATEGORY_CHOICES = (
     ('3', 'Physical Activity'),
     ('4', 'Civic Engagement'),
     ('5', 'Other'),
-
 )
+
+STATUS_CHOICES=(
+    ('send','send'),
+    ('accepted','accepted'),
+    ('rejected','rejected'),
+    ('deleted','deleted'),
+)
+
 # Create your models here.
 class Event(models.Model):
     title_text = models.CharField("Event Name", max_length=255)
@@ -37,6 +44,7 @@ class Event(models.Model):
     # geolocation = map_fields.GeoLocationField(max_length=100)
     organizer = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)
     location=PlacesField()
+    
     def __str__(self):
         return self.title_text
     """"
@@ -48,7 +56,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     def __str__(self):
         return self.name
-
+    
 class Profile(models.Model):
     user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
@@ -77,14 +85,24 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-    
 
-STATUS_CHOICES=(
-    ('send','send'),
-    ('accepted','accepted'),
-    ('rejected','rejected'),
-    ('deleted','deleted'),
-)
+# class Friend(models.Model):
+#     users = models.ManyToManyField(User)
+#     current_user = models.ForeignKey(User, related_name='owner', null=True)
+
+#     @classmethod
+#     def make_friend(cls, current_user, new_friend):
+#         friend, created = cls.objects.get_or_create(
+#             current_user=current_user
+#         )
+#         friend.users.add(new_friend)
+
+#     @classmethod
+#     def lose_friend(cls, current_user, new_friend):
+#         friend, created = cls.objects.get_or_create(
+#             current_user=current_user
+#         )
+#         friend.users.remove(new_friend)
 
 class Relationship(models.Model):
     sender=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name= 'sender')
@@ -112,5 +130,15 @@ def post_save_delete_to_friends(sender, created, instance, **kwargs):
     if instance.status=='deleted':
         sender_.friends.remove(receiver_.user)
         receiver_.friends.remove(sender_.user)
+        sender_.save()
+        receiver_.save()
+        
+@receiver(post_save, sender=Relationship)
+def post_save_send_to_friends(sender, created, instance, **kwargs):
+    sender_=instance.sender
+    receiver_=instance.receiver
+    if instance.status=='send':
+        sender_.status='send'
+        receiver_.status='send'
         sender_.save()
         receiver_.save()
