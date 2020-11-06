@@ -22,13 +22,13 @@
             <br>Age: {{profile.user.profile.age}}
             {% if profile.get_friends_no != 0 %}
               <br>Friends: 
+              <ol>
               {%for friend in profile.get_friends %}
-                <ol>
-                  <li>
-                    <a href="{%url 'social_app:edit_prefs' %}" > {{friend}}</a>
-                  </li>  
-                </ol>
+                <li>
+                    <a href="{%url 'social_app:profile_page' friend.profile.id%}" > {{friend}}</a>
+                </li>
               {% endfor %}
+              </ol> 
             </p>
             {% else %}
               {% if user.id == profile.user.id %}
