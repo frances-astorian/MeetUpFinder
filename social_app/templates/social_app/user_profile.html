@@ -19,11 +19,22 @@
         <div class="card-body">
           <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</h5>
           <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
-            <br>Age: {{profile.user.profile.age}}</p>
-            {% if user.id == profile.user.id %}
-                <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
+            <br>Age: {{profile.user.profile.age}}
+            {% if profile.get_friends_no != 0 %}
+              <br>Friends: 
+              {%for friend in profile.get_friends %}
+                <ol>
+                  <li>
+                    <a href="{%url 'social_app:edit_prefs' %}" > {{friend}}</a>
+                  </li>  
+                </ol>
+              {% endfor %}
+            </p>
+            {% else %}
+              {% if user.id == profile.user.id %}
+                  <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
+              {% endif %}
             {% endif %}
-            
         </div>
       </div>
     </div>
