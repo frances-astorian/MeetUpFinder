@@ -21,26 +21,57 @@
           <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
             <br>Age: {{profile.user.profile.age}}
             {% if profile.get_friends_no != 0 %}
-              <br>Friends: 
+              <br>Friends : 
               <ol>
               {%for friend in profile.get_friends %}
                 <li>
-                    <a href="{%url 'social_app:profile_page' friend.profile.id%}" > {{friend}}</a>
+                    <a href="{%url 'social_app:profile_page' friend.profile.id%}"> {{friend}}</a>
                 </li>
               {% endfor %}
               </ol> 
             </p>
             {% else %}
-              {% if user.id == profile.user.id %}
-                  <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
-              {% endif %}
+            {% endif %}
+            <!-- Friend Request -->
+            {FRIEND REQUESTS DISPLAYED HERE}
+            {BUTTONS FOR ACCEPTING / REJECTING}
+            <!-- Send friend request if user is not on his profile -->
+            {CHECK IF FRIENDS EXIST AND NOT DISPLAY BUTTON IF ALREADY FRIENDS}
+            <!-- <p>{{profile.get_friends}}</p>
+            <p>{{all_users}}</p> -->
+            <!-- <script type="text/javascript">
+              var i,j;
+              for (person of "{{all_users}}"){
+                // for(j=0;j<"{{profile.get_friends.count}}";j++){
+                //   if("{{all_users}}")
+                // }
+                              }
+              document.write("{{profile.get_friends}}");
+            </script> -->
+
+            <!-- <p>{{profile.get_friends}}</p>
+            <p>{{user.id}}</p>
+            <p>{{profile.user.id}}</p>
+            {% if user.id != profile.user.id %}
+                {% for friend in profile.get_friends %}
+                  {% for person in all_users %}
+                 <p>{{friend.id}}</p>
+                 <p>{{person.id}}</p>
+                    {% if friend.id != person.id %}
+                    <a href="{%url 'social_app:send_friend_request' %}" class="btn btn-secondary">Send Friend Request</a>
+                    {% endif %}
+
+                  {% endfor %}
+              {% endfor %}
+            {% endif %} -->
+
+            {% if user.id == profile.user.id %}
+                 <br> <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
             {% endif %}
         </div>
       </div>
     </div>
   </div>
-
-
 
 
 
