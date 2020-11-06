@@ -12,7 +12,7 @@
 {% if user.is_authenticated %}
 <h3>Your Profile Was Updated Successfully {{user.first_name}}!</h3>
 <br><br>
-<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
+<a class="btn btn-dark" href="{% url 'social_app:profile_page' user.id%}">Go back to Profile Page</a></li>
 <a class="btn btn-dark" href="{% url 'home' %}">Home</a></li>
 
 
