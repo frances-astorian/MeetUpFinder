@@ -6,7 +6,7 @@ from django.shortcuts import render
 from .forms import EditProfileForm, ProfileForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
-from events.models import Profile
+from events.models import Profile, Relationship
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -58,4 +58,10 @@ class ProfileView(generic.DetailView):
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context["page_user"]=page_user
+        context['all_users']=users
         return context
+    
+def SendFriendReuqest(request,):
+    model=Relationship
+    template_name='social_app/send_friend_request.html'
+    return render(request,'social_app/send_friend_request.html')
