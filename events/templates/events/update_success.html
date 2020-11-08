@@ -10,8 +10,8 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-<h3>Your event was created or updated accordingly {{user.first_name}}!</h3>
-<br>
+<h3>Your Event Was Updated Successfully {{user.first_name}}!</h3>
+<br><br>
 <a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>
 
 

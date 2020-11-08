@@ -30,11 +30,10 @@ CUSTOM_MAP = {
     ),
 }
 class EventForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        id =kwargs.pop('user')
+    def __init__(self, user, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         # access object through self.instance...
-        self.fields['organizer'].queryset = User.objects.filter(id=id)
+        self.fields['organizer'].queryset = User.objects.filter(id=user.id)
     def clean_date(self):
             date=self.cleaned_data['date']
             if (date<currDate.today()):

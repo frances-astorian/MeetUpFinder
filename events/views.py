@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 from .forms import EventForm
@@ -28,6 +28,9 @@ def index(request):
     return HttpResponse("Hello, world. This is for events.")
 
 def event_success(request):
+    return render(request,'events/event_success.html')
+
+def update_success(request):
     return render(request,'events/event_success.html')
 
 def CategoryListView(request):
@@ -91,7 +94,7 @@ class EventFormView(FormView):
     form_class = EventForm
     success_url = reverse_lazy('event_success')
 """
-
+"""
 def postEventForm(request):
     form = EventForm(user = request.user.id, data = request.POST or None)
     if form.is_valid():
@@ -111,6 +114,44 @@ def postEventForm(request):
         return HttpResponseRedirect('success/')
     context = {'form': form}
     return render(request, 'events/post_event.html', context)
+
+def updateEventForm(request):
+    form = EventForm(user = request.user.id, data = request.POST or None)
+    if form.is_valid():
+        #form.instance.organizer = request.user
+        
+        # name = form.cleaned_data['title_text']
+        # location = form.cleaned_data['location_text']
+        # time = form.cleaned_data['time']
+        # date=form.cleaned_data['date']
+        # category = form.cleaned_data['category_text']
+        # description = form.cleaned_data['description_text']
+        # address1 = form.cleaned_data['address']
+        # e = Event(title_text = name, location_text = location, 
+        #    date=date, time = time, category_text = category, description_text = description, address = address1)
+        
+        form.save()
+        return HttpResponseRedirect('success/')
+    context = {'form': form}
+    return render(request, 'events/update_event.html', context)
+"""
+class CreateEvent(generic.CreateView):
+    template_name = 'events/post_event.html'
+    form_class = EventForm
+    def get_form_kwargs(self, **kwargs):
+        form_kwargs = super(CreateEvent, self).get_form_kwargs(**kwargs)
+        form_kwargs["user"] = self.request.user
+        return form_kwargs
+    def get_success_url(self):
+        return reverse('events:event_success')
+
+class UpdateView(generic.UpdateView):
+    model = Event
+    template_name = 'events/update_event.html'
+    #form_class = EventForm
+    fields = ['title_text', 'location_text','time', 'date', 'category_text','description_text' , 'location']
+    def get_success_url(self):
+        return reverse('events:event_success')
 
 #new....for searching
 # def get_query_set(request):

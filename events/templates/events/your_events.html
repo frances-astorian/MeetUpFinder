@@ -10,11 +10,14 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-<h3>Your Events</h3>
+<h3 class='text-center'>Your Events</h3>
 {% if your_event_list %}
+<ul class="list-group list-group-flush">
     {% for event in your_event_list %}
         <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
+        <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a>
     {% endfor %}
+  </ul>
 {% else %}
     <p>No events have been posted by you.</p>
 {% endif %}
