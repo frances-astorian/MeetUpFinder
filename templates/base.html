@@ -14,6 +14,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% load socialaccount %}
         <title>Hoos2Meet</title>  
         
         
@@ -55,7 +56,9 @@
                           Profile
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if user.is_authenticated %}
                             <a class='dropdown-item' href="{%url 'social_app:profile_page'  user.profile.id%}">Profile Page</a>
+                            {% endif %}
                             <a class='dropdown-item' href="{%url 'social_app:edit_prefs'  %}">Edit Profile</a>
                             <a class='dropdown-item' href="{%url 'social_app:edit_profile'  %}">Profile Settings</a>
                         </div>
