@@ -36,15 +36,12 @@ class Event(models.Model):
     title_text = models.CharField("Event Name", max_length=255)
     location_text = models.CharField("Location", max_length=100)
     date = models.DateField(default=datetime.date.today)
-    #time_text = models.CharField("Time", max_length=20)
     time = models.TimeField(default = '14:30',help_text="Enter in 24 hour format (eg - 2:45 or 16:45)")
     category_text = models.CharField("Category", max_length=255,default = 'Uncategorized')
     description_text = models.CharField("Description", max_length=200)
-    # address = map_fields.AddressField("Address", max_length=200)
-    # geolocation = map_fields.GeoLocationField(max_length=100)
-    organizer = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)
+    organizer = models.ForeignKey(User, default = 1, on_delete=models.CASCADE,related_name='organizer')
     location=PlacesField()
-    
+    # rsvp= models.ManyToManyField(User, related_name='rsvp', blank=True )
     def __str__(self):
         return self.title_text
     """"
@@ -62,6 +59,8 @@ class Profile(models.Model):
     bio = models.TextField()
     categories = models.ManyToManyField(Category)
     friends = models.ManyToManyField(User, related_name='friends', blank = True)
+    current_user = models.ForeignKey(User, related_name='owner', null=True, on_delete=models.CASCADE)
+    # rsvped=models.ManyToManyField(Event, related_name='rsvped', blank=True)
     #profile_pic=models.ImageField(null=True, blank=True, upload_to='images/profile/')
     location = models.CharField("Location", null=True,max_length=100)
     updated=models.DateTimeField(auto_now=True)
@@ -73,9 +72,24 @@ class Profile(models.Model):
     
     def get_friends_no(self):
         return self.friends.all().count()
-    
+
+    @classmethod
+    def make_friend(cls, current_user, new_friend):
+        friend = cls.objects.get(id=current_user.id)
+        friendreq =cls.objects.get(id=new_friend.id)
+        friend.friends.add(new_friend)
+        friendreq.friends.add(current_user)
+
+    @classmethod
+    def lose_friend(cls, current_user, new_friend):
+        friend = cls.objects.get(id=current_user.id)
+        friendreq =cls.objects.get(id=new_friend.id)
+        friend.friends.remove(new_friend)
+        friendreq.friends.remove(current_user)
+            
     def __str__(self):
         return str(self.user)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
