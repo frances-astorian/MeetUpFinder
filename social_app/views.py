@@ -4,6 +4,7 @@ from django.views import generic
 from django import forms
 from django.shortcuts import render
 from .forms import EditProfileForm, ProfileForm
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from events.models import Profile, Relationship
@@ -54,14 +55,20 @@ class ProfileView(generic.DetailView):
     template_name='social_app/user_profile.html'
 
     def get_context_data(self, *args, **kwargs):
-        users = Profile.objects.all()
+        users = Profile.objects.exclude(id=self.kwargs['pk'])
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context["page_user"]=page_user
-        context['all_users']=users
+        context['users']=users
+        context['friends']=Profile.get_friends(page_user)
         return context
     
-def SendFriendReuqest(request,):
-    model=Relationship
-    template_name='social_app/send_friend_request.html'
-    return render(request,'social_app/send_friend_request.html')
+def change_friends(request, operation, pk):
+    friend = User.objects.get(pk=pk)
+    user = User.objects.get(pk=request.user.id)
+    if operation == 'add':
+        Profile.make_friend(request.user, friend)
+    elif operation == 'remove':
+        Profile.lose_friend(request.user, friend)
+    # return redirect('social_app:profile_page', user_id=request.user.profile.id)
+    return redirect('social_app:edit_prefs')
