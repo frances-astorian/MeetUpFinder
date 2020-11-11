@@ -39,7 +39,8 @@ def CategoryListView(request):
 
 def YourEvents(request):
     your_event_list = Event.objects.filter(organizer = request.user)
-    return render(request, 'events/your_events.html', {'your_event_list':your_event_list})
+    rsvp_event_list = Event.objects.filter(rsvps=request.user )
+    return render(request, 'events/your_events.html', {'your_event_list':your_event_list , 'rsvp_event_list':rsvp_event_list})
 
 class EventsView(generic.ListView):
     model = Event
