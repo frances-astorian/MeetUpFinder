@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django import forms
 from django.shortcuts import render
@@ -70,5 +70,4 @@ def change_friends(request, operation, pk):
         Profile.make_friend(request.user, friend)
     elif operation == 'remove':
         Profile.lose_friend(request.user, friend)
-    # return redirect('social_app:profile_page', user_id=request.user.profile.id)
-    return redirect('social_app:edit_prefs')
+    return redirect('social_app:profile_page', pk=request.user.id)
