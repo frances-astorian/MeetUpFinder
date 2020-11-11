@@ -17,5 +17,7 @@ urlpatterns = [
     path('password/', PasswordsChangeView.as_view(template_name='social_app/change-password.html')),
     path('password_success/', views.password_success, name='password_success'),
     path('<int:pk>/profile/', views.ProfileView.as_view(), name='profile_page'),
+    path('search_users/', views.UsersView.as_view(), name='search_users'),
+    path('search/', views.search, name='search'),
     url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friends, name='change_friends'),
     ]

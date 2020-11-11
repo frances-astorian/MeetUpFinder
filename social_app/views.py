@@ -11,10 +11,37 @@ from events.models import Profile, Relationship
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.db.models import Q
+
 
 
 
 # Create your views here.
+
+
+class UsersView(generic.ListView):
+    model = User
+    template_name = 'social_app/search_users.html'
+    context_object_name = 'user_list'
+    result = User.objects.all()
+
+
+def is_valid_search(param):
+    return param != '' and param is not None
+
+def search(request):
+    template = 'social_app/search_users.html'
+
+    results = User.objects.all()
+
+    user = request.GET.get('user')
+
+
+    if is_valid_search(user):
+        results = results.filter(Q(first_name__icontains=user)|Q(last_name__icontains=user)|Q(username__icontains=user))
+
+    context = {"user_list": results}
+    return render(request, template, context)
 
 def password_success(request):
     return render(request,'social_app/passwords_success.html')
