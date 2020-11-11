@@ -208,11 +208,10 @@ def search(request):
     if is_valid_search(event_date):
         results = results.filter(date=event_date)
 
-
     if is_valid_search(event_time):
         results = results.filter(time=event_time)
 
-    if is_valid_search(category) and category != "Choose...":
+    if is_valid_search(category):
         results = results.filter(category_text=category)
 
     results = results.exclude(date__lte=datetime.date.today())

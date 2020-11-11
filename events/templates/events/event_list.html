@@ -60,12 +60,9 @@
                 <div class="form-group col-md-2">
                   <label for="category">Category</label>
                   <select id="category" class="form-control" name="category">
-                    <option selected>Choose...</option>
-                      <option>Food</option>
-                      <option>Career</option>
-                      <option>Physical Activity</option>
-                      <option>Civic Engagement</option>
-                      <option>Other</option>
+                      {% for item in cat_menu%}
+                        <option>{{item.name}}</option>
+                      {% endfor %}
                   </select>
                 </div>
               </div>
