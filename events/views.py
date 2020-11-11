@@ -84,8 +84,11 @@ class DetailView(generic.DetailView):
     #context_object_name = 'detail'
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
+        stuff = get_object_or_404(Event, id=self.kwargs['pk'])
+        rsvp_total = stuff.rsvp_total()
         context=super(DetailView, self).get_context_data(*args, **kwargs)
         context["cat_menu"]=cat_menu
+        context["rsvp_total"]=rsvp_total
         return context
 
 """
@@ -214,3 +217,8 @@ def search(request):
 #     results = Event.objects.filter(Q(title_text__icontains=query) | Q(description_text__icontains=query)).exclude(date__lte=datetime.date.today())
 #     context = {"events_list": results}
 #     return render(request, template, context)
+
+def RSVPView(request, pk):
+    event = get_object_or_404(Event, id=request.POST.get('event_id'))
+    event.rsvps.add(request.user)
+    return HttpResponseRedirect(reverse('events:detail', args=[str(pk)]))

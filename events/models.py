@@ -42,6 +42,11 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, default = 1, on_delete=models.CASCADE,related_name='organizer')
     location=PlacesField()
     # rsvp= models.ManyToManyField(User, related_name='rsvp', blank=True )
+    rsvps = models.ManyToManyField(User, related_name='rsvps') #blank=True )
+
+    def rsvp_total(self):
+        return self.rsvps.count()
+
     def __str__(self):
         return self.title_text
     """"

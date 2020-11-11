@@ -197,6 +197,16 @@
     <div id="map">
     </div>
   </ul>
+
+    <hr>
+    <br/>
+    <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
+      {% csrf_token %}
+      <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-primary btn-sm">
+      RSVP
+      </button> - {{ rsvp_total }} RSVP'd
+    </form>
+
     {% endblock %}
   </body>
 </html>
