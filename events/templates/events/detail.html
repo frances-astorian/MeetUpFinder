@@ -204,7 +204,7 @@
       {% csrf_token %}
       <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-primary btn-sm">
       RSVP
-      </button> - {{ rsvp_total }} RSVP'd
+      </button> - {{ rsvp_total }} RSVP'd - {{ friend_rsvps}} friend(s) RSVP'd
     </form>
 
     {% endblock %}

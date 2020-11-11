@@ -47,6 +47,9 @@ class Event(models.Model):
     def rsvp_total(self):
         return self.rsvps.count()
 
+    def rsvps_list(self):
+        return self.rsvps
+
     def __str__(self):
         return self.title_text
     """"

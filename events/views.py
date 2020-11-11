@@ -86,9 +86,19 @@ class DetailView(generic.DetailView):
         cat_menu = Category.objects.all()
         stuff = get_object_or_404(Event, id=self.kwargs['pk'])
         rsvp_total = stuff.rsvp_total()
+        rsvps_list = stuff.rsvps_list()
         context=super(DetailView, self).get_context_data(*args, **kwargs)
         context["cat_menu"]=cat_menu
         context["rsvp_total"]=rsvp_total
+        context["rsvps_list"]= stuff.rsvps.all()
+        #compare list of friends and users who liked
+        context["friends"] = self.request.user.profile.friends.all()
+        friend_rsvps = 0
+        for profile in stuff.rsvps.all() :
+            if profile in self.request.user.profile.friends.all():
+                friend_rsvps += 1
+        
+        context["friend_rsvps"] = friend_rsvps
         return context
 
 """
