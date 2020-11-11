@@ -20,6 +20,7 @@
           <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</h5>
           <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
             <br>Age: {{profile.user.profile.age}}
+            {% if user.id == profile.user.id %} 
             {% if profile.get_friends_no != 0 %}
               <br>Friends : 
               <ol>
@@ -28,6 +29,7 @@
                     <a href="{%url 'social_app:profile_page' friend.profile.id%}"> {{friend}}</a>
                 </li>
               {% endfor %}
+            {% endif %}
               </ol> 
             </p>
             {% else %}
