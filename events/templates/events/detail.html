@@ -39,6 +39,13 @@
         <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
         RSVP
         </button> - {{ rsvp_total }} RSVP'd - {{ friend_rsvps}} friend(s) RSVP'd
+        {% for friend in user.profile.get_friends %}
+                {% for rsvp in event.rsvps_list_all %}
+                {% if friend == rsvp %}
+                <br><a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+                {% endif %}
+                {% endfor %}
+        {%endfor%}  
       </form>
       <br/>
       </div>
