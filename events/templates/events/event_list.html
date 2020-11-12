@@ -75,8 +75,15 @@
           <ul class="list-group list-group-flush">
             {% for event in events_list%}
               <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
-              
+              <label>Friends going: </label>
+              {% for friend in user.profile.get_friends %}
+                {% for rsvp in event.rsvps_list_all %}
+                {% if friend == rsvp %}
+                <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+                {% endif %}
+                {% endfor %}
               {%endfor%}
+              {%endfor%}  
           <style type="text/css">
             /* Set the size of the div element that contains the map */
             #map {
