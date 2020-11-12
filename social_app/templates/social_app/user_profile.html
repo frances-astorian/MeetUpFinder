@@ -18,7 +18,14 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</h5>
-          <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences: {{user.profile.categories}}
+          <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences:<ol>
+            {%for category in profile.get_categories%}
+            <br>
+            <li>
+              <a href="{%url 'events:category' category %}"> {{category}}</a>
+            </li>
+            {%endfor%}
+          </ol>
             <br>Age: {{profile.user.profile.age}}
             {% if user.id == profile.user.id %} 
             {% if profile.get_friends_no != 0 %}
