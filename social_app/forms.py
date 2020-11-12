@@ -26,11 +26,11 @@ class ProfileForm(forms.ModelForm):
     # need to edit form so that it only displays current friends and not all
     class Meta:
         model=Profile
-        fields = ('bio', 'age', 'location', 'categories','friends')
+        fields = ('bio', 'age', 'location', 'categories')
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         # add custom error messages
-        self.fields['friends'].error_messages['required'] = 'Control Click to deselect existing friends'
+        #self.fields['friends'].error_messages['required'] = 'Control Click to deselect existing friends'
     """def save(self, commit=True):
         instance = forms.ModelForm.save(self)
         instance.category_set.clear()

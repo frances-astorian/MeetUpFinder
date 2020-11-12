@@ -15,25 +15,23 @@
       <div class="col-md-4">
         <img src="{% static 'events/images/default_pic.png'%}" class="card-img" alt="...">
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 justify-content-center">
         <div class="card-body">
-          <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</h5>
-          <p class="card-text">{{profile.user.profile.location}} <br>{{profile.user.profile.bio}} <br>Event Preferences:<ol>
-            {%for category in profile.get_categories%}
-            <br>
-            <li>
-              <a href="{%url 'events:category' category %}"> {{category}}</a>
-            </li>
-            {%endfor%}
-          </ol>
-            <br>Age: {{profile.user.profile.age}}
+          <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}<br> <small> {{profile.user.profile.location}} • {{profile.user.profile.age}} years old</small></h5>
+          <p class="card-text">{{profile.user.profile.bio}} <br> <br>
+            Event Preferences:
+            <ol>
+              {%for category in profile.get_categories%}
+                <a class = 'list-group-item list-group-item-action'href="{%url 'events:category' category %}"> {{category}}</a>
+              {%endfor%}
+            </ol>
             {% if user.id == profile.user.id %} 
             {% if profile.get_friends_no != 0 %}
               <br>Friends : 
               <ol>
               {%for friend in profile.get_friends %}
                 <li>
-                    <a href="{%url 'social_app:profile_page' friend.profile.id%}"> {{friend}}</a>
+                    <a class = 'list-group-item list-group-item-action' href="{%url 'social_app:profile_page' friend.profile.id%}"> {{friend}}</a>
                 </li>
               {% endfor %}
             {% endif %}
@@ -62,7 +60,7 @@
                   {% endif %}
             {% endif %}
             {% if user.id == profile.user.id %}
-                 <br> <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-primary">Edit Profile</a>
+                 <br> <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-dark">Edit Profile</a>
             {% endif %}
         </div>
       </div>
