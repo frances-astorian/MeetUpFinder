@@ -25,21 +25,19 @@ class UsersView(generic.ListView):
     context_object_name = 'user_list'
     result = User.objects.all()
 
-
 def is_valid_search(param):
     return param != '' and param is not None
 
 def search(request):
     template = 'social_app/search_users.html'
-
     results = User.objects.all()
-
+    # print(results)
     user = request.GET.get('user')
-
-
+    
+    # context["friends"]=user.friends.all()
     if is_valid_search(user):
         results = results.filter(Q(first_name__icontains=user)|Q(last_name__icontains=user)|Q(username__icontains=user))
-
+    
     context = {"user_list": results}
     return render(request, template, context)
 
@@ -97,4 +95,10 @@ def change_friends(request, operation, pk):
         Profile.make_friend(request.user, friend)
     elif operation == 'remove':
         Profile.lose_friend(request.user, friend)
+    elif operation == 'add_search':
+        Profile.make_friend(request.user, friend)
+        return redirect('social_app:search_users')
+    elif operation == 'remove_search':
+        Profile.lose_friend(request.user, friend)
+        return redirect('social_app:search_users')
     return redirect('social_app:profile_page', pk=request.user.id)
