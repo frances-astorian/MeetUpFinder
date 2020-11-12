@@ -75,9 +75,7 @@
           <ul class="list-group list-group-flush">
             {% for event in events_list%}
               <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
-              <!--{% if user.id == event.organizer.id %}
-                <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a>
-              {% endif %}-->
+              
               {%endfor%}
           <style type="text/css">
             /* Set the size of the div element that contains the map */
