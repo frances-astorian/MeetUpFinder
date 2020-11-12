@@ -36,9 +36,19 @@
       
       <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
         {% csrf_token %}
+        {{ rsvp_total }} RSVP'd - {{ friend_rsvps}} friend(s) RSVP'd <br>
+        {% if friend_rsvps != 0%}
+            {% for friend in user.profile.get_friends %}
+            {% for rsvp in event.rsvps_list_all %}
+            {% if friend == rsvp %}
+            <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+            {% endif %}
+            {% endfor %}
+          {%endfor%}
+        {% endif %}
         <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
         RSVP
-        </button> - {{ rsvp_total }} RSVP'd - {{ friend_rsvps}} friend(s) RSVP'd
+        </button> 
         {% for friend in user.profile.get_friends %}
                 {% for rsvp in event.rsvps_list_all %}
                 {% if friend == rsvp %}
