@@ -7,7 +7,7 @@ from .forms import EditProfileForm, ProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
-from events.models import Profile, Relationship
+from events.models import Profile, Relationship, Category, CATEGORY_CHOICES
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -80,12 +80,14 @@ class ProfileView(generic.DetailView):
     template_name='social_app/user_profile.html'
 
     def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
         users = Profile.objects.exclude(id=self.kwargs['pk'])
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context["page_user"]=page_user
         context['users']=users
         context['friends']=Profile.get_friends(page_user)
+        context["cat_menu"]=cat_menu
         return context
     
 def change_friends(request, operation, pk):
