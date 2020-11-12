@@ -49,7 +49,9 @@ class Event(models.Model):
 
     def rsvps_list(self):
         return self.rsvps
-
+    def rsvps_list_all(self):
+        return self.rsvps.all()
+    
     def __str__(self):
         return self.title_text
     """"
@@ -65,7 +67,7 @@ class Category(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, blank=True)
     friends = models.ManyToManyField(User, related_name='friends', blank = True)
     current_user = models.ForeignKey(User, related_name='owner', null=True, on_delete=models.CASCADE)
     # rsvped=models.ManyToManyField(Event, related_name='rsvped', blank=True)
@@ -75,6 +77,8 @@ class Profile(models.Model):
     created=models.DateTimeField(auto_now_add=True)
     age = models.IntegerField(null=True)
     
+    def get_categories(self):
+        return self.categories.all()
     def get_friends(self):
         return self.friends.all()
     
