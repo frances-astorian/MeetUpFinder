@@ -28,10 +28,46 @@
       <div class = 'text-center'>
         <!--<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>-->
         <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a>
-        <br><br>
+        <br>
       </div>
       {% endif %}
-    
+      <div class = 'text-center'>
+        <hr>
+      
+      <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
+        {% csrf_token %}
+        RSVPs: {{ rsvp_total }}
+        {% if friend_rsvps != 0%}
+        {% if friend_rsvps == 1%}
+        • Your friend 
+            {% for friend in user.profile.get_friends %}
+            {% for rsvp in event.rsvps_list_all %}
+            {% if friend == rsvp %}
+            <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+            {% endif %}
+            {% endfor %}
+          {%endfor%}
+          is going!
+          {% else%}
+          • Your friends 
+                {% for friend in user.profile.get_friends %}
+                {% for rsvp in event.rsvps_list_all %}
+                {% if friend == rsvp %}
+                <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }} </a>
+                {% endif %}
+                {% endfor %}
+              {%endfor%}
+              are going!
+          {% endif %}
+        {% endif %}
+        <br>
+        <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
+        RSVP
+        </button> 
+      </form>
+      <br/>
+      </div>
+      
     <ul>
     <table class="table table-striped">
         <thead>
@@ -93,96 +129,95 @@
         google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
       }
       function addMarkers(){
-           const iconBase =
-             "http://maps.google.com/mapfiles/kml/shapes/";
-           const icons = {
-              Food: {
-                icon: iconBase + "convenience.png",
-              },
-              Career: {
-                icon: iconBase + "info.png",
-              },
-            }
-            var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
-            var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/movies.png";
-            var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
-            var entertainment="http://maps.google.com/mapfiles/kml/shapes/movies.png";
-            var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/police.png";
-              var point = new google.maps.LatLng("{{event.location.latitude}}","{{event.location.longitude}}");
-              var category="{{event.category_text}}";
-              if(category=== '1'||category==='Food'){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: {url:icons["Food"].icon,
-                  scaledSize: new google.maps.Size(30, 30)},
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              else if(category=== '2'||category==='Career'){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: {url:icons["Career"].icon,
-                  scaledSize: new google.maps.Size(30, 30)},
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              else if(category=== '3'||category==="Physical Activity"){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: {url:physical_activity,
-                  scaledSize: new google.maps.Size(30, 30)},
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              else if(category=== '6'||category==="Entertainment"){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: {url:entertainment,
-                  scaledSize: new google.maps.Size(30, 30)},
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              else if(category=== '4'||category==="Civic Engagement"){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  icon: {url:civic_engagement,
-                  scaledSize: new google.maps.Size(30, 30)},
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              else if(category==='5'||category==="Other"){
-                var marker=new google.maps.Marker({
-                  position: point,
-                  map: map,
-                  animation: google.maps.Animation.DROP,
-                  title:'{{event.title_text}}',
-               });
-              }
-              marker['infowindow']  = new google.maps.InfoWindow({
-                  content: "<b>{{event.title_text}}</b> <br> Location: {{ event.location_text }} <br> Category: {{event.get_category_text_display}} ",
-              });
-              marker.addListener("click",toggleBounce);
-              google.maps.event.addListener(marker, 'click', function() {
-              //window.location.href = this.url;
-              this['infowindow'].open(map, this);
-              });
-              google.maps.event.addListener(marker, 'mouseover', function() {
-                  this['infowindow'].open(map, this);
-              });
-              google.maps.event.addListener(marker, 'mouseout', function() {
-                  this['infowindow'].close(map, this);
-              });
-              marker.setMap(map);
+        const iconBase =
+                   "http://maps.google.com/mapfiles/kml/shapes/";
+                 const icons = {
+                    Food: {
+                      icon: iconBase + "convenience.png",
+                    },
+                    Career: {
+                      icon: iconBase + "info.png",
+                    },
+                  }
+        var physical_activity="http://maps.google.com/mapfiles/kml/shapes/play.png";
+        var entertainment="http://maps.google.com/mapfiles/kml/shapes/movies.png";
+        var civic_engagement="http://maps.google.com/mapfiles/kml/shapes/police.png";
+        var point = new google.maps.LatLng("{{event.location.latitude}}","{{event.location.longitude}}");
+        var category="{{event.category_text}}";
+        if(category=== '1'||category==='Food'){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: {url:icons["Food"].icon,
+            scaledSize: new google.maps.Size(30, 30)},
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        else if(category=== '2'||category==='Career'){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: {url:icons["Career"].icon,
+            scaledSize: new google.maps.Size(30, 30)},
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        else if(category=== '3'||category==="Physical Activity"){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: {url:physical_activity,
+            scaledSize: new google.maps.Size(30, 30)},
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        else if(category=== '6'||category==="Entertainment"){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: {url:entertainment,
+            scaledSize: new google.maps.Size(30, 30)},
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        else if(category=== '4'||category==="Civic Engagement"){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            icon: {url:civic_engagement,
+            scaledSize: new google.maps.Size(30, 30)},
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        else if(category==='5'||category==="Other"){
+          var marker=new google.maps.Marker({
+            position: point,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            title:'{{event.title_text}}',
+          });
+        }
+        marker['infowindow']  = new google.maps.InfoWindow({
+            content: "<b>{{event.title_text}}</b> <br> Location: {{ event.location_text }} <br> Category: {{event.get_category_text_display}} ",
+        });
+        marker.addListener("click",toggleBounce);
+        google.maps.event.addListener(marker, 'click', function() {
+        //window.location.href = this.url;
+        this['infowindow'].open(map, this);
+        });
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            this['infowindow'].open(map, this);
+        });
+        google.maps.event.addListener(marker, 'mouseout', function() {
+            this['infowindow'].close(map, this);
+        });
+        marker.setMap(map);
+               
       }
       function toggleBounce() {
         if (marker.getAnimation() !== null) {
@@ -197,6 +232,9 @@
     <div id="map">
     </div>
   </ul>
+
+    
+
     {% endblock %}
   </body>
 </html>

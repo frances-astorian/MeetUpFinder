@@ -17,6 +17,12 @@
         <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
         <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a>
     {% endfor %}
+    <br>
+    <h4 class='text-center'>RSVP'ed Events</h4>
+    {% for event in rsvp_event_list %}
+        <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
+        <!-- <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a> -->
+    {% endfor %}
   </ul>
 {% else %}
     <p>No events have been posted by you.</p>
