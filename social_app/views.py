@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from events.models import Event
 
 
 
@@ -84,10 +85,12 @@ class ProfileView(generic.DetailView):
         users = Profile.objects.exclude(id=self.kwargs['pk'])
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
+        rsvp_event_list = Event.objects.filter(rsvps=self.kwargs['pk'] )
         context["page_user"]=page_user
         context['users']=users
         context['friends']=Profile.get_friends(page_user)
         context["cat_menu"]=cat_menu
+        context["rsvp_event_list"] = rsvp_event_list
         return context
     
 def change_friends(request, operation, pk):

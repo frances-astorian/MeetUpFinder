@@ -20,4 +20,5 @@ urlpatterns = [
     path('your-events/', views.YourEvents, name='your_events'),
     path('rsvp-events/', views.RSVPEvents, name='rsvp_events'),
     path('rsvp/<int:pk>', views.RSVPView, name="rsvp_event"),
+    path('unrsvp/<int:pk>', views.unRSVPView, name="unrsvp_event"),
     ]

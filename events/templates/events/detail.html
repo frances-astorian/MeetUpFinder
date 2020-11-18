@@ -61,13 +61,47 @@
                 are going!
             {% endif %}
           {% endif %}
-          {% endif %}
+
           <br/>
         <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
         RSVP
         </button> 
+        <br/>
+      </form>
+      {% else %}
+      <form action="{% url 'events:unrsvp_event' event.pk%}" method="POST">
+        {% csrf_token %}
+        RSVPs: {{ rsvp_total }}
+        {% if friend_rsvps != 0%}
+        {% if friend_rsvps == 1%}
+        • Your friend 
+            {% for friend in user.profile.get_friends %}
+            {% for rsvp in event.rsvps_list_all %}
+            {% if friend == rsvp %}
+            <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+            {% endif %}
+            {% endfor %}
+          {%endfor%}
+          is going!
+          {% else%}
+          • Your friends 
+                {% for friend in user.profile.get_friends %}
+                {% for rsvp in event.rsvps_list_all %}
+                {% if friend == rsvp %}
+                <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }} </a>
+                {% endif %}
+                {% endfor %}
+              {%endfor%}
+              are going!
+          {% endif %}
+        {% endif %}
+        <br>
+        <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
+        Un-RSVP
+        </button> 
         
       </form>
+      {% endif %}
       <br/>
       </div>
       

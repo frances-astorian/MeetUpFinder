@@ -236,3 +236,8 @@ def RSVPView(request, pk):
     event = get_object_or_404(Event, id=request.POST.get('event_id'))
     event.rsvps.add(request.user)
     return HttpResponseRedirect(reverse('events:detail', args=[str(pk)]))
+
+def unRSVPView(request, pk):
+    event = get_object_or_404(Event, id=request.POST.get('event_id'))
+    event.rsvps.remove(request.user)
+    return HttpResponseRedirect(reverse('events:detail', args=[str(pk)]))
