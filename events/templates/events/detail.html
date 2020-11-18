@@ -34,28 +34,39 @@
       <div class = 'text-center'>
         <hr>
       
-      <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
-        {% csrf_token %}
-        {{ rsvp_total }} RSVP'd - {{ friend_rsvps}} friend(s) RSVP'd <br>
-        {% if friend_rsvps != 0%}
-            {% for friend in user.profile.get_friends %}
-            {% for rsvp in event.rsvps_list_all %}
-            {% if friend == rsvp %}
-            <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+        {% if not user in rsvps_list %}
+        <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
+          {% csrf_token %}
+          RSVPs: {{ rsvp_total }}
+          {% if friend_rsvps != 0%}
+          {% if friend_rsvps == 1%}
+          • Your friend 
+              {% for friend in user.profile.get_friends %}
+              {% for rsvp in event.rsvps_list_all %}
+              {% if friend == rsvp %}
+              <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
+              {% endif %}
+              {% endfor %}
+            {%endfor%}
+            is going!
+            {% else%}
+            • Your friends 
+                  {% for friend in user.profile.get_friends %}
+                  {% for rsvp in event.rsvps_list_all %}
+                  {% if friend == rsvp %}
+                  <a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }} </a>
+                  {% endif %}
+                  {% endfor %}
+                {%endfor%}
+                are going!
             {% endif %}
-            {% endfor %}
-          {%endfor%}
-        {% endif %}
+          {% endif %}
+          {% endif %}
+          <br/>
         <button type="submit", name="event_id", value="{{ event.id }}", class="btn btn-dark btn-sm">
         RSVP
         </button> 
-        {% for friend in user.profile.get_friends %}
-                {% for rsvp in event.rsvps_list_all %}
-                {% if friend == rsvp %}
-                <br><a href = "{%url 'social_app:profile_page' friend.id%}">{{ friend.username }}</a>
-                {% endif %}
-                {% endfor %}
-        {%endfor%}  
+        
       </form>
       <br/>
       </div>

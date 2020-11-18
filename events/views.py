@@ -42,6 +42,10 @@ def YourEvents(request):
     rsvp_event_list = Event.objects.filter(rsvps=request.user )
     return render(request, 'events/your_events.html', {'your_event_list':your_event_list , 'rsvp_event_list':rsvp_event_list})
 
+def RSVPEvents(request):
+    rsvp_event_list = Event.objects.filter(rsvps=request.user )
+    return render(request, 'events/rsvp_events.html', {'rsvp_event_list':rsvp_event_list})
+
 class EventsView(generic.ListView):
     model = Event
     template_name = 'events/event_list.html'

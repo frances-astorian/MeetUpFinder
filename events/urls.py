@@ -18,5 +18,6 @@ urlpatterns = [
     path('category/<str:cats>/', views.CategoryView, name='category'),
     path('category-list/', views.CategoryListView, name='category-list'),
     path('your-events/', views.YourEvents, name='your_events'),
+    path('rsvp-events/', views.RSVPEvents, name='rsvp_events'),
     path('rsvp/<int:pk>', views.RSVPView, name="rsvp_event"),
     ]
