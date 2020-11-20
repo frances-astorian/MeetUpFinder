@@ -30,16 +30,17 @@ def is_valid_search(param):
     return param != '' and param is not None
 
 def search(request):
-    template = 'social_app/search_users.html'
-    results = User.objects.all()
-    # print(results)
+    userid=request.user.id
+    userprofile=request.user.profile
     user = request.GET.get('user')
-    
+    results = User.objects.exclude(id=userid)
+    template = 'social_app/search_users.html'
+    # print(results)
     # context["friends"]=user.friends.all()
     if is_valid_search(user):
         results = results.filter(Q(first_name__icontains=user)|Q(last_name__icontains=user)|Q(username__icontains=user))
-    
-    context = {"user_list": results}
+
+    context = {"user_list":results}
     return render(request, template, context)
 
 def password_success(request):
