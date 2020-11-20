@@ -19,7 +19,7 @@ from django.urls import reverse_lazy, reverse
 
 
 from .forms import EventForm
-from .models import Event, CATEGORY_CHOICES, Category, Relationship, STATUS_CHOICES
+from .models import Event, CATEGORY_CHOICES, Category
 #from .filters import eventFilter
 
 import datetime
