@@ -25,19 +25,27 @@
             <br/>       
     </form>
     <ul class="list-group list-group-flush">
-        {% for item in user_list%}
+        {% for item in user_list %}
           <!-- "{{user.profile.get_friends}}" -->
-            {% if item.username == user.username %}
+            <!-- {% if item.username == user.username %}
             {% elif not item in user.profile.get_friends %}
-                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} ({{item.username}})</b><br> </a></li>
-                <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}">
-                <button type="button" class="btn btn-success">Add Friend</button>
-                </a>
+                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a> 
+                  <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success">Add Friend</a>
+                </li>
             {% elif item in user.profile.get_friends %}
-                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} ({{item.username}})</b><br> </a></li>
-                <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}">
-                <button type="button" class="btn btn-danger">Remove Friend</button>
-                </a>
+                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a>
+                  <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a>
+                </li>
+            {% endif %} -->
+            {% if item == user%}
+            {% elif not item in user.profile.get_friends %}
+                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a> 
+                  <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success">Add Friend</a>
+                </li>
+            {% elif item in user.profile.get_friends %}
+                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a>
+                  <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a>
+                </li>
             {% endif %}
           <br/>
         {% endfor %}
