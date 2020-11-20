@@ -7,7 +7,7 @@ from .forms import EditProfileForm, ProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
-from events.models import Profile, Relationship, Category, CATEGORY_CHOICES
+from events.models import Profile, Category, CATEGORY_CHOICES
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseRedirect
