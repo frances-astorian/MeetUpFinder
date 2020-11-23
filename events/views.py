@@ -208,7 +208,7 @@ def search(request):
         results = results.filter(Q(description_text__icontains=description_contains))
 
     if is_valid_search(location_contains):
-        results = results.filter(Q(location_text__icontains=location_contains))
+        results = results.filter(Q(location__icontains=location_contains))
 
     if is_valid_search(event_date):
         results = results.filter(date=event_date)
