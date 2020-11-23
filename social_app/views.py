@@ -108,13 +108,21 @@ def change_friends(request, operation, pk):
     friend = User.objects.get(pk=pk)
     user = User.objects.get(pk=request.user.id)
     if operation == 'add':
-        Profile.make_friend(request.user, friend)
+        friend.profile.friends.add(request.user)
+        request.user.profile.friends.add(friend)
+        # Profile.make_friend(request.user, friend)
     elif operation == 'remove':
-        Profile.lose_friend(request.user, friend)
+        friend.profile.friends.remove(request.user)
+        request.user.profile.friends.remove(friend)
+        # Profile.lose_friend(request.user, friend)
     elif operation == 'add_search':
-        Profile.make_friend(request.user, friend)
+        friend.profile.friends.add(request.user)
+        request.user.profile.friends.add(friend)
+        # Profile.make_friend(request.user, friend)
         return redirect('social_app:profile_page', pk=pk)
     elif operation == 'remove_search':
-        Profile.lose_friend(request.user, friend)
+        friend.profile.friends.remove(request.user)
+        request.user.profile.friends.remove(friend)
+        # Profile.lose_friend(request.user, friend)
         return redirect('social_app:profile_page', pk=pk)
     return redirect('social_app:profile_page', pk=pk)
