@@ -22,6 +22,7 @@
                 <a class = 'list-group-item list-group-item-action'href="{%url 'events:category' category %}"> {{category}}</a>
               {%endfor%}
             </ol><br/>
+            {% if user in friends %}
             {% if rsvp_event_list %}
               Events Attending:
               <ol>
@@ -29,6 +30,7 @@
                   <a class = 'list-group-item list-group-item-action'href="{%url 'events:detail' e.id %}"> {{e.title_text}}</a>
                 {%endfor%}
               </ol>
+            {% endif %}
             {% endif %}
             {% if user.id == profile.user.id %} 
             {% if profile.get_friends_no != 0 %}
