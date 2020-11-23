@@ -37,7 +37,8 @@
           <div class="card-header">
             <h3 class="text-center login-title">Update Event</h3>
           </div>
-           <div class="card-body">
+          {% if event.organizer == user %}
+          <div class="card-body">
             {{ form.as_p }}
             {{ form.media }}
             
@@ -49,6 +50,9 @@
             </div>
           </div> 
         </div>
+        {% else %}
+        You did not organize this event so you can't update it!
+        {% endif %}
       </div>
     </form>
 {% else %}
