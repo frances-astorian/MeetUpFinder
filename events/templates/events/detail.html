@@ -28,12 +28,11 @@
       <div class = 'text-center'>
         <!--<a class="btn btn-dark" href="{% url 'events:event_list' %}">See All Events</a></li>-->
         <a class = 'btn btn-dark btn-sm'href = "{% url 'events:update_event' event.id %}"> Edit Event</a>
-        <br><br>
+        <br>
       </div>
       {% endif %}
       <div class = 'text-center'>
         <hr>
-      
         {% if not user in rsvps_list %}
         <form action="{% url 'events:rsvp_event' event.pk%}" method="POST">
           {% csrf_token %}
