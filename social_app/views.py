@@ -93,15 +93,17 @@ class ProfileView(generic.DetailView):
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
+        login_user_id = self.request.user.pk
+        login_user_profile_id = self.request.user.profile.id
         users = Profile.objects.exclude(id=self.kwargs['pk'])
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
-        rsvp_event_list = Event.objects.filter(rsvps=self.kwargs['pk'] )
+        rsvp_event_list = Event.objects.filter(rsvps=login_user_id)
         context["page_user"]=page_user
         context['users']=users
         context['friends']=Profile.get_friends(page_user)
         context["cat_menu"]=cat_menu
-        context['rsvp_event_list'] = rsvp_event_list
+        context["rsvp_event_list"] = rsvp_event_list
         return context
     
 def change_friends(request, operation, pk):
