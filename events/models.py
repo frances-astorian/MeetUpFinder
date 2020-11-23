@@ -34,7 +34,7 @@ STATUS_CHOICES=(
 # Create your models here.
 class Event(models.Model):
     title_text = models.CharField("Event Name", max_length=255)
-    location_text = models.CharField("Location", max_length=100)
+    # location_text = models.CharField("Location", max_length=100)
     date = models.DateField(default=datetime.date.today)
     time = models.TimeField(default = '14:30',help_text="Enter in 24 hour format (eg - 2:45 or 16:45)")
     category_text = models.CharField("Category", max_length=255,default = 'Uncategorized')
