@@ -14,7 +14,10 @@
     <div class="row no-gutters">
       <div class="col-md-8 justify-content-center">
         <div class="card-body">
-          <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}<br> <small> {{profile.user.profile.location}} • {{profile.user.profile.age}} years old</small></h5>
+          {% if profile.user.first_name == "" %}
+          A little lonely here. Maybe they forgot to update their profile
+          {% endif %}
+          <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}<br> <small> {% if profile.user.profile.location != None %}{{profile.user.profile.location}} {% endif %}{% if profile.user.profile.age != None %} • {{profile.user.profile.age}} years old {% endif %}</small></h5>
           <p class="card-text">{{profile.user.profile.bio}} <br> <br>
            {% if profile.get_categories_no != 0 %}
             Event Preferences:
@@ -22,10 +25,9 @@
               {%for category in profile.get_categories%}
                 <a class = 'list-group-item list-group-item-action'href="{%url 'events:category' category %}"> {{category}}</a>
               {%endfor%}
-            </ol><br/>
+            </ol>
             {% endif %}
             {% if user in friends %}
-            {% if rsvp_event_list %}
               Events Attending:
               <ol>
                 {%for e in rsvp_event_list%}
@@ -33,10 +35,9 @@
                 {%endfor%}
               </ol>
             {% endif %}
-            {% endif %}
             {% if user.id == profile.user.id %} 
             {% if profile.get_friends_no != 0 %}
-              <br>Friends : 
+              Friends : 
               <ol>
               {%for friend in profile.get_friends %}
                 <li>
@@ -51,7 +52,7 @@
             <!-- Friend Request -->
             <!-- Send friend request if user is not on his profile -->
             <script>
-              console.log("{{profile}}")
+              console.log("{{profile.user.pk}}")
               console.log("{{user}}")
               console.log("{{user.profile.get_friends}}")
               console.log("{{friends}}")
@@ -59,13 +60,13 @@
             </script>       
             {% if user.id != profile.user.id %} 
                   {% if not user in friends %}
-                  <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
-                  <a href="{% url 'social_app:change_friends' operation='add' pk=profile.pk %}">
+                  <a href="{%url 'social_app:profile_page' user.id %}" class="btn btn-dark">Go back to Profile</a> 
+                  <a href="{% url 'social_app:change_friends' operation='add' pk=profile.user.id %}">
                     <button type="button" class="btn btn-success">Add Friend</button>
                     </a>
                   {% else %}
-                  <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
-                  <a href="{% url 'social_app:change_friends' operation='remove' pk=profile.pk %}">
+                  <a href="{%url 'social_app:profile_page' user.id %}" class="btn btn-dark">Go back to Profile</a> 
+                  <a href="{% url 'social_app:change_friends' operation='remove' pk=profile.user.id %}">
                     <button type="button" class="btn btn-danger">Remove Friend</button>
                     </a>
                   {% endif %}
