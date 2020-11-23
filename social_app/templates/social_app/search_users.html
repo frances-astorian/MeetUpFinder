@@ -39,18 +39,26 @@
             {% endif %} -->
             {% if not item in user.profile.get_friends %}
                 <a href="{% url 'social_app:profile_page' pk=item.profile.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a> 
-                <br> <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success">Add Friend</a> <br>
+                <br> <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success" onclick="addSuccess()">Add Friend</a> <br>
                 </li>
             {% elif item in user.profile.get_friends %}
                 <a href="{% url 'social_app:profile_page' pk=item.profile.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a>             
-                <br> <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a> <br>
+                <br> <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger" onclick="removeSuccess()">Remove Friend</a> <br>
                 </li> 
             {% endif %}
           <br/>
         {% endfor %}
     </ul>
 </div>
+<script>
+  function addSuccess() {
+    alert("Friend Added Successfully!");
+  }
 
+  function removeSuccess() {
+    alert("Friend Removed Successfully!");
+  }
+  </script>
 {% else %}
 <style>
 .container { height: 100%; width: 100%; justify-content: center !important; }

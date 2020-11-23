@@ -39,21 +39,23 @@
           <form method="GET" action="{% url 'events:search' %}">
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <input type="search" class="form-control" name="title_description_contains" value="{{request.GET.title_description_contains}}" placeholder="Title/Description">
+                  <input type="search" class="form-control" name="title_description_contains" value="{{request.GET.title_description_contains}}" placeholder="Search Title or Description">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                   <input type="search" class="form-control" name="location_contains" value="{{request.GET.location_contains}}" placeholder="Search Location">
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-xs-4">
                   <label>Event Date</label>
-                  <input type="date" class="form-control" name="event_date" value="{{request.GET.event_date}}" placeholder="Search Date (Format: 2000-12-24)">
+                  <input type="date" class="form-control" name="event_date" value="{{request.GET.event_date}}" placeholder="Search Date">
+                  <small id="dateHelp" class="form-text text-muted">Format: 2000-12-24</small>
                 </div>
+                <!--
                 <div class="form-group col-md-3">
                   <label>Event Time</label>
                   <input type="time" class="form-control" name="event_time" value="{{request.GET.event_time}}" placeholder="Search Time (Format: 14:30)">
-                </div>
+                </div>-->
                 <div class="form-group col-md-2">
                   <label for="category">Category</label>
                   <select id="category" class="form-control" name="category">
@@ -67,6 +69,12 @@
               <button type="submit" class="btn btn-outline-dark">Search</button>
               <a class = "btn btn-outline-dark" href="{% url 'events:event_list' %}" role = "button">Clear Search</a><br><br>
             </form>
+            
+ 
+            
+            
+            
+            
             <div id="map">
             </div>
       {% if events_list %}
@@ -211,6 +219,8 @@
       height: 370px;
       margin-top: auto;
       margin-bottom: auto;
+      margin-left: auto;
+    margin-right: auto;
       width: 400px;
       background-color: rgba(238, 238, 238, 0.5) !important;
     }

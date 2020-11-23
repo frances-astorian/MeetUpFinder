@@ -62,24 +62,34 @@
                   {% if not user in friends %}
                   <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
                   <a href="{% url 'social_app:change_friends' operation='add' pk=profile.user.id %}">
-                    <button type="button" class="btn btn-success">Add Friend</button>
+                    <button type="button" class="btn btn-success" onclick="addSuccess()">Add Friend</button>
                     </a>
                   {% else %}
                   <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
                   <a href="{% url 'social_app:change_friends' operation='remove' pk=profile.user.id %}">
-                    <button type="button" class="btn btn-danger">Remove Friend</button>
+                    <button type="button" class="btn btn-danger" onclick="removeSuccess()" >Remove Friend</button>
                     </a>
                   {% endif %}
             {% endif %}
             {% if user.id == profile.user.id %}
                  <br> <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-dark">Edit Profile</a>
+                 <a href="{%url 'social_app:edit_profile'  %}" class="btn btn-dark">Profile Settings</a>
+
             {% endif %}
         </div>
       </div>
     </div>
   </div>
 
-
+  <script>
+    function addSuccess() {
+      alert("Friend Added Successfully!");
+    }
+  
+    function removeSuccess() {
+      alert("Friend Removed Successfully!");
+    }
+    </script>
 
 {% else %}
 <style>

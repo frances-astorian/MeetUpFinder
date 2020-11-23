@@ -10,7 +10,7 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-<h3 class='text-center'>Your Events</h3>
+<h3 class='text-center'>Organized Events</h3>
 {% if your_event_list %}
 <ul class="list-group list-group-flush">
     {% for event in your_event_list %}

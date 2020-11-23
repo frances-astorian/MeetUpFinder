@@ -68,6 +68,7 @@ class EventsView(generic.ListView):
 
 def CategoryView(request, cats):
     category_events = Event.objects.filter(category_text=cats)
+    category_events = category_events.exclude(date__lte=datetime.date.today())
     return render(request, 'events/categories.html', {'cats':cats, 'category_events':category_events})
 
 # def EventsView(request):
