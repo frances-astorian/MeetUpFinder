@@ -52,7 +52,7 @@ class EventForm(forms.ModelForm):
         #   )
         # }
         widgets={
-            'category_text':forms.Select(choices = choice_list, attrs={'class':'form-control'})
+            'category_text':forms.Select(choices = choice_list, attrs={'class':'form-control', 'style': 'width:200px'})
         }
         
        

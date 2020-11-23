@@ -40,10 +40,12 @@ def CategoryListView(request):
 def YourEvents(request):
     your_event_list = Event.objects.filter(organizer = request.user)
     rsvp_event_list = Event.objects.filter(rsvps=request.user )
+    your_event_list = your_event_list.exclude(date__lte=datetime.date.today())
     return render(request, 'events/your_events.html', {'your_event_list':your_event_list , 'rsvp_event_list':rsvp_event_list})
 
 def RSVPEvents(request):
     rsvp_event_list = Event.objects.filter(rsvps=request.user )
+    rsvp_event_list = rsvp_event_list.exclude(date__lte=datetime.date.today())
     return render(request, 'events/rsvp_events.html', {'rsvp_event_list':rsvp_event_list})
 
 class EventsView(generic.ListView):
@@ -167,8 +169,12 @@ class CreateEvent(generic.CreateView):
 class UpdateView(generic.UpdateView):
     model = Event
     template_name = 'events/update_event.html'
-    #form_class = EventForm
-    fields = ['title_text','time', 'date', 'category_text','description_text' , 'location']
+    form_class = EventForm
+    def get_form_kwargs(self, **kwargs):
+        form_kwargs = super(UpdateView, self).get_form_kwargs(**kwargs)
+        form_kwargs["user"] = self.request.user
+        return form_kwargs
+    #fields = ['title_text','time', 'date', 'category_text','description_text' , 'location']
     def get_success_url(self):
         return reverse('events:event_success')
 
