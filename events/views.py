@@ -193,7 +193,7 @@ def search(request):
 
     results = Event.objects.all()
 
-    title_contains = request.GET.get('title_contains')
+    title_description_contains = request.GET.get('title_description_contains')
     description_contains = request.GET.get('description_contains')
     location_contains = request.GET.get('location_contains')
     event_date = request.GET.get('event_date')
@@ -201,8 +201,8 @@ def search(request):
     category = request.GET.get('category')
 
 
-    if is_valid_search(title_contains):
-        results = results.filter(Q(title_text__icontains=title_contains))
+    if is_valid_search(title_description_contains):
+        results = results.filter(Q(title_text__icontains=title_description_contains) | Q(description_text__icontains=title_description_contains))
 
     if is_valid_search(description_contains):
         results = results.filter(Q(description_text__icontains=description_contains))

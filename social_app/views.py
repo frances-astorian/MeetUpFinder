@@ -91,7 +91,7 @@ class ProfileView(generic.DetailView):
         context['users']=users
         context['friends']=Profile.get_friends(page_user)
         context["cat_menu"]=cat_menu
-        context["rsvp_event_list"] = rsvp_event_list
+        context['rsvp_event_list'] = rsvp_event_list
         return context
     
 def change_friends(request, operation, pk):

@@ -38,11 +38,8 @@
       <div class="container">
           <form method="GET" action="{% url 'events:search' %}">
               <div class="form-row">
-                <div class="form-group col-md-4">
-                  <input type="search" class="form-control" name="title_contains" value="{{request.GET.title_contains}}" placeholder="Search Title">
-                </div>
-                <div class="form-group col-md-4">
-                  <input type="search" class="form-control" name="description_contains" value="{{request.GET.description_contains}}" placeholder="Search Description">
+                <div class="form-group col-md-6">
+                  <input type="search" class="form-control" name="title_description_contains" value="{{request.GET.title_description_contains}}" placeholder="Title/Description">
                 </div>
                 <div class="form-group col-md-4">
                   <input type="search" class="form-control" name="location_contains" value="{{request.GET.location_contains}}" placeholder="Search Location">
@@ -60,7 +57,8 @@
                 <div class="form-group col-md-2">
                   <label for="category">Category</label>
                   <select id="category" class="form-control" name="category">
-                      {% for item in cat_menu%}
+                      <option></option>
+                      {% for item in cat_menu %}
                         <option>{{item.name}}</option>
                       {% endfor %}
                   </select>
