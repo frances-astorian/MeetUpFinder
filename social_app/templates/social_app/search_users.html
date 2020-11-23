@@ -24,7 +24,7 @@
             </div>
             <br/>       
     </form>
-    <ul class="list-group list-group-flush">
+    <ul class="list-group ">
         {% for item in user_list %}
           <!-- "{{user.profile.get_friends}}" -->
             <!-- {% if item.username == user.username %}
@@ -37,15 +37,14 @@
                   <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a>
                 </li>
             {% endif %} -->
-            {% if item == user%}
-            {% elif not item in user.profile.get_friends %}
-                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a> 
-                  <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success">Add Friend</a>
+            {% if not item in user.profile.get_friends %}
+                <a href="{% url 'social_app:profile_page' pk=item.profile.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a> 
+                <br> <a href="{% url 'social_app:change_friends' operation='add_search' pk=item.pk %}" class="btn btn-success">Add Friend</a> <br>
                 </li>
             {% elif item in user.profile.get_friends %}
-                <a href="{% url 'social_app:profile_page' item.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a>
-                  <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a>
-                </li>
+                <a href="{% url 'social_app:profile_page' pk=item.profile.id %}" class = 'list-group-item list-group-item-action'><b>{{item.first_name}} {{item.last_name}} @{{item.username}}</a>             
+                <br> <a href="{% url 'social_app:change_friends' operation='remove_search' pk=item.pk %}" class="btn btn-danger">Remove Friend</a> <br>
+                </li> 
             {% endif %}
           <br/>
         {% endfor %}
