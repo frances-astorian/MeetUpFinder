@@ -167,7 +167,7 @@ class UpdateView(generic.UpdateView):
     model = Event
     template_name = 'events/update_event.html'
     #form_class = EventForm
-    fields = ['title_text', 'location_text','time', 'date', 'category_text','description_text' , 'location']
+    fields = ['title_text','time', 'date', 'category_text','description_text' , 'location']
     def get_success_url(self):
         return reverse('events:event_success')
 
