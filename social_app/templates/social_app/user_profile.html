@@ -60,12 +60,12 @@
             </script>       
             {% if user.id != profile.user.id %} 
                   {% if not user in friends %}
-                  <a href="{%url 'social_app:profile_page' user.id %}" class="btn btn-dark">Go back to Profile</a> 
+                  <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
                   <a href="{% url 'social_app:change_friends' operation='add' pk=profile.user.id %}">
                     <button type="button" class="btn btn-success">Add Friend</button>
                     </a>
                   {% else %}
-                  <a href="{%url 'social_app:profile_page' user.id %}" class="btn btn-dark">Go back to Profile</a> 
+                  <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
                   <a href="{% url 'social_app:change_friends' operation='remove' pk=profile.user.id %}">
                     <button type="button" class="btn btn-danger">Remove Friend</button>
                     </a>
