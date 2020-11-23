@@ -13,7 +13,7 @@
 {% if category_events %}
     <h3>{{ cats }} Events </h3>
     {% for event in category_events %}
-        <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Location: {{event.location_text}}</a></li>
+        <a href="{% url 'events:detail' event.id %}" class = 'list-group-item list-group-item-action'><b>{{event.title_text}}</b><br> {{event.description_text}}<br>{{event.date}} at {{event.time}}<br>Address: {{event.location}}</a></li>
     {% endfor %}
 {% else %}
     <h3>No Events in {{cats}} Category</h3>
