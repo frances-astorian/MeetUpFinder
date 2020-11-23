@@ -19,15 +19,25 @@ from events.models import Event
 
 # Create your views here.
 
+def is_valid_search(param):
+    return param != '' and param is not None
 
 class UsersView(generic.ListView):
     model = User
     template_name = 'social_app/search_users.html'
-    context_object_name = 'user_list'
-    result = User.objects.all()
+    # context_object_name = 'user_list'
+    # result = User.objects.all()
+    def get_context_data(self, **kwargs):
+           context = super().get_context_data(**kwargs)  
+           login_user_id = self.request.user.pk
+           results=User.objects.exclude(id=login_user_id)
+        #    for usersearch in results:
+                # if is_valid_search(usersearch):
+                #     results = results.filter(Q(first_name__icontains=usersearch)|Q(last_name__icontains=usersearch)|Q(username__icontains=usersearch))
+           context["user_list"]=results
+           return context
+       
 
-def is_valid_search(param):
-    return param != '' and param is not None
 
 def search(request):
     userid=request.user.id
@@ -103,8 +113,8 @@ def change_friends(request, operation, pk):
         Profile.lose_friend(request.user, friend)
     elif operation == 'add_search':
         Profile.make_friend(request.user, friend)
-        return redirect('social_app:search_users')
+        return redirect('social_app:profile_page', pk=pk)
     elif operation == 'remove_search':
         Profile.lose_friend(request.user, friend)
-        return redirect('social_app:search_users')
-    return redirect('social_app:profile_page', pk=request.user.id)
+        return redirect('social_app:profile_page', pk=pk)
+    return redirect('social_app:profile_page', pk=pk)
