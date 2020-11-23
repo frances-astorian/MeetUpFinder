@@ -18,7 +18,7 @@ class EventAdmin(admin.ModelAdmin):
     #   }
     # }
     # list_display = ('title_text', 'location_text','date','time','category_text','description_text','address','geolocation','location')
-    list_display = ('title_text', 'location_text','date','time','category_text','description_text','location')
+    list_display = ('title_text','date','time','category_text','description_text','location')
 
     
 # Register your models here.
