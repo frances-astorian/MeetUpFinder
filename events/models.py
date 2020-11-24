@@ -12,6 +12,13 @@
 # *  Software License: N/A
 # *  Comment: Used for help in writing the friends features and functions
 
+# *  Author: Oscar Cortez
+# *  Date: Apr 13, 2020
+# *  Code version: Python 3
+# *  URL: https://pypi.org/project/dj-places/
+# *  Software License: BSD license
+# *  Comment: Used for setting up the map feature along with geolocation, autofill in address bar.
+
 from django.db import models
 from django.urls import reverse
 from django_google_maps import fields as map_fields
