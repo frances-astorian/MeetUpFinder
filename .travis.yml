@@ -13,4 +13,4 @@ python:
 script: 
   - "python manage.py makemigrations"
   - "python manage.py migrate"
-  - "python manage.py test social_app"
+  - "python manage.py test events"
