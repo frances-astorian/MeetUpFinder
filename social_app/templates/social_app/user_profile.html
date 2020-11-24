@@ -15,8 +15,12 @@
       <div class="col-md-8 justify-content-center">
         <div class="card-body">
           {% if profile.user.first_name == "" %}
-          A little lonely here. Maybe they forgot to update their profile
-          {% endif %}
+          A little lonely here. Maybe they forgot to update their profile.
+          {% elif user.id == profile.user.id and profile.user.first_name == ""%}
+            A little lonely here. Update your first name using "Profile Settings" below.
+                 <br> <a href="{%url 'social_app:edit_prefs' %}" class="btn btn-dark">Edit Profile</a>
+                 <a href="{%url 'social_app:edit_profile'  %}" class="btn btn-dark">Profile Settings</a>
+            {% endif %}
           <h5 class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}<br> <small> {% if profile.user.profile.location != None %}{{profile.user.profile.location}} {% endif %}{% if profile.user.profile.age != None %} • {{profile.user.profile.age}} years old {% endif %}</small></h5>
           <p class="card-text">{{profile.user.profile.bio}} <br> <br>
            {% if profile.get_categories_no != 0 %}
