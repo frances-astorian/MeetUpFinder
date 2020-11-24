@@ -5,6 +5,13 @@
 # *  Software License: N/A
 # *  Comment: Used for help writing events model
 
+# *  Author: Max Goodridge
+# *  Date: Mar 28, 2017
+# *  Code version: N/A
+# *  URL: https://www.youtube.com/watch?v=_DqmVMlJzqA
+# *  Software License: N/A
+# *  Comment: Used for help in writing the friends features and functions
+
 from django.db import models
 from django.urls import reverse
 from django_google_maps import fields as map_fields
