@@ -64,14 +64,7 @@
             {% else %}
             {% endif %}
             <!-- Friend Request -->
-            <!-- Send friend request if user is not on his profile -->
-            <script>
-              console.log("{{profile.user.pk}}")
-              console.log("{{user}}")
-              console.log("{{user.profile.get_friends}}")
-              console.log("{{friends}}")
-              console.log("{{users}}")
-            </script>       
+            <!-- Send friend request if user is not on his profile -->     
             {% if user.id != profile.user.id %} 
                   {% if not user in friends %}
                   <a href="{%url 'social_app:profile_page' user.profile.id %}" class="btn btn-dark">Go back to Profile</a> 
