@@ -40,12 +40,12 @@ def CategoryListView(request):
 def YourEvents(request):
     your_event_list = Event.objects.filter(organizer = request.user)
     rsvp_event_list = Event.objects.filter(rsvps=request.user )
-    your_event_list = your_event_list.exclude(date__lte=datetime.date.today())
+    your_event_list = your_event_list.exclude(date__lt=datetime.date.today())
     return render(request, 'events/your_events.html', {'your_event_list':your_event_list , 'rsvp_event_list':rsvp_event_list})
 
 def RSVPEvents(request):
     rsvp_event_list = Event.objects.filter(rsvps=request.user )
-    rsvp_event_list = rsvp_event_list.exclude(date__lte=datetime.date.today())
+    rsvp_event_list = rsvp_event_list.exclude(date__lt=datetime.date.today())
     return render(request, 'events/rsvp_events.html', {'rsvp_event_list':rsvp_event_list})
 
 class EventsView(generic.ListView):
@@ -56,7 +56,7 @@ class EventsView(generic.ListView):
     #ordering = ['-date']
     #myFilter = eventFilter()
     def get_queryset(self):
-        result = Event.objects.exclude(date__lte=datetime.date.today())
+        result = Event.objects.exclude(date__lt=datetime.date.today())
         # query = self.request.GET.get('search')
         # if query:
         #     postresult = Event.objects.filter(title_text=query)
