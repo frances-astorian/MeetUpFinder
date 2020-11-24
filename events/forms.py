@@ -1,11 +1,11 @@
 # *  REFERENCES
-# *  Title: How to Save Data from a Form to a Database Table in Django
-# *  Author: N/A
+# *  Title: How to save data from a form to a database in Django 
 # *  Date: N/A
 # *  Code version: N/A
 # *  URL: http://www.learningaboutelectronics.com/Articles/How-to-save-data-from-a-form-to-a-database-table-in-Django.php
 # *  Software License: N/A
-# *  Comment: Used for help writing EventForm class
+# *  Comment: Used to help create the basic event form, when the event fields were all text fields
+
 from django import forms
 from .models import Event, Category
 # from django_google_maps import widgets as map_widgets

@@ -1,9 +1,35 @@
-# *  Author: N/A
+# *************************************************************************************************
+# *  REFERENCES
+# *  Title: How to save data from a form to a database in Django 
 # *  Date: N/A
 # *  Code version: N/A
 # *  URL: http://www.learningaboutelectronics.com/Articles/How-to-save-data-from-a-form-to-a-database-table-in-Django.php
 # *  Software License: N/A
 # *  Comment: Used for help writing events model
+# *  ---------------------------------------------------------------------------------------------
+# *  Title: How to add user profile in Django
+# *  Author: Vitor Frietas
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://simpleisbetterthancomplex.com/tutorial/2016/11/23/how-to-add-user-profile-to-django-admin.html
+# *  Software License: N/A
+# *  Comment: Used for help writing profile model
+# *  ---------------------------------------------------------------------------------------------
+# *  Title: Django user profile 
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://stackoverflow.com/questions/54943171/how-can-i-create-user-profile-after-registering-user-in-django-using-signals
+# *  Software License: N/A
+# *  Comment: Help with @reciever and @classmethod functions
+# *  ---------------------------------------------------------------------------------------------
+# *  Title: Create Blog Like Button - Django Blog #18
+# *  Author: N/A
+# *  Date: N/A(Date accessed : 11/11/2020)
+# *  Code version: N/A
+# *  URL: https://www.youtube.com/watch?v=PXqRPqDjDgc&ab_channel=Codemy.com
+# *  Software License: BSD
+# *  Note : Used to help create the RSVP feature for each event (in the Event model)
 
 # *  Author: Max Goodridge
 # *  Date: Mar 28, 2017

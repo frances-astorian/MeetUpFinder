@@ -8,6 +8,30 @@
 # *  Software License: N/A
 # *  Comment: Used for help writing postEventForm method, which saves data from event forms
 # ***************************************************************************************/
+# *  Title: How to Add Search Functionality to a Website in Django
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: http://www.learningaboutelectronics.com/Articles/How-to-add-search-functionality-to-a-website-in-Django.php
+# *  Software License: N/A
+# *  Comment: Help with writing search view
+# ***************************************************************************************/
+# *  Title: Getting database values using get_object_or_404
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://stackoverflow.com/questions/18349566/getting-database-values-using-get-object-or-404
+# *  Software License: N/A
+# *  Comment: Help with using get_object_or_404 method for RSVP implementation
+# ***************************************************************************************/
+# *  Title: Build a dynamic filtering form with Django // 6 - Filtering by date and view count
+# *  Author: N/A
+# *  Date: N/A (Date accessed : 11/3/2020)
+# *  Code version: N/A
+# *  URL: https://www.youtube.com/watch?v=n1_MQiSXyxw&t=552s&ab_channel=JustDjango
+# *  Software License: BSD
+# *  Note : Used to help the write the portion of the event search view that searches date and time , and also writing the helper function is_valid_search
+
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
