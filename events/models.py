@@ -4,6 +4,22 @@
 # *  URL: http://www.learningaboutelectronics.com/Articles/How-to-save-data-from-a-form-to-a-database-table-in-Django.php
 # *  Software License: N/A
 # *  Comment: Used for help writing events model
+# *  ---------------------------------------------------------------------------------------------
+# *  Author: Vitor Frietas
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://simpleisbetterthancomplex.com/tutorial/2016/11/23/how-to-add-user-profile-to-django-admin.html
+# *  Software License: N/A
+# *  Comment: Used for help writing profile model
+# *  ---------------------------------------------------------------------------------------------
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://stackoverflow.com/questions/54943171/how-can-i-create-user-profile-after-registering-user-in-django-using-signals
+# *  Software License: N/A
+# *  Comment: Help with @reciever and @classmethod functions
+
+
 
 from django.db import models
 from django.urls import reverse

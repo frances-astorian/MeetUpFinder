@@ -8,6 +8,22 @@
 # *  Software License: N/A
 # *  Comment: Used for help writing postEventForm method, which saves data from event forms
 # ***************************************************************************************/
+# *  Title: How to Add Search Functionality to a Website in Django
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: http://www.learningaboutelectronics.com/Articles/How-to-add-search-functionality-to-a-website-in-Django.php
+# *  Software License: N/A
+# *  Comment: Help with writing search view
+# ***************************************************************************************/
+# *  Title: Getting database values using get_object_or_404
+# *  Author: N/A
+# *  Date: N/A
+# *  Code version: N/A
+# *  URL: https://stackoverflow.com/questions/18349566/getting-database-values-using-get-object-or-404
+# *  Software License: N/A
+# *  Comment: Help with using get_object_or_404 method for RSVP implementation
+
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
