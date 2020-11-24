@@ -215,7 +215,7 @@
                      });
                     }
                     marker['infowindow']  = new google.maps.InfoWindow({
-                        content: "<b>{{event.title_text}}</b> <br> Location: {{ event.location_text }} <br> Category: {{event.get_category_text_display}} ",
+                        content: "<b>{{event.title_text}}</b> <br> Date : {{event.date}} <br> Time : {{event.time}}",
                     });
                     marker.addListener("click",toggleBounce);
                     google.maps.event.addListener(marker, 'click', function() {
