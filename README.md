@@ -1,5 +1,5 @@
 # project-1-21: Meet-Up Finder
-Basic Features:
+Features:
 - Can post a new event from "All Events" page 
 - Click on any event to view details, RSVP, or have the option to edit the events you created
     - Can see how many people have RSVP'd and whether any of your friends are going
